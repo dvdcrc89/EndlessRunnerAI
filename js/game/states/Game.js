@@ -5,7 +5,7 @@ JustRun.Game = {
     this.jumpesN = 0;
     this.score = 0;
     game.physics.startSystem(Phaser.Physics.ARCADE);
-    game.physics.arcade.gravity.y = 250;
+    game.physics.arcade.gravity.y = 400;
       
     this.background = game.add.tileSprite(0, 0, game.width, game.height-73  , 'background');
     this.background.autoScroll(-100, 0);
@@ -108,7 +108,7 @@ JustRun.Game = {
         this.background.autoScroll(-300, 0);
         this.ground.autoScroll(-500, 0);
         this.playerType = 1;
-        game.physics.arcade.gravity.y = 250;
+        game.physics.arcade.gravity.y = 400;
 
     },
     
@@ -129,7 +129,7 @@ JustRun.Game = {
         this.background.autoScroll(-100, 0);
         this.ground.autoScroll(-400, 0);
         this.playerType = 0;
-        game.physics.arcade.gravity.y = 250;
+        game.physics.arcade.gravity.y = 400;
 
     },
     jump: function(){
@@ -138,7 +138,7 @@ JustRun.Game = {
                     if(this.player.body.touching.down){
                         this.player.animations.add('jump',[14,15,16,17,18,19,20,21,22,23]);
                         this.player.animations.play('jump');
-                        this.player.body.velocity.y = -250;
+                        this.player.body.velocity.y = -280;
 
                         }
                         break;
@@ -147,7 +147,7 @@ JustRun.Game = {
                         
                         this.player.animations.add('jump',[10,11,12,13,14,15,16,17,18,19]);
                         this.player.animations.play('jump');
-                        this.player.body.velocity.y = -350;
+                        this.player.body.velocity.y = -400;
                         this.jumpesN++;
                         }
                         break;
