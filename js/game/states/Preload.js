@@ -18,13 +18,11 @@ JustRun.Preload = {
     this.load.spritesheet('player', 'assets/images/cowboy.png', 423.6, 510,33);
     this.load.spritesheet('player2', 'assets/images/robot.png', 572, 556,28);
     this.load.spritesheet('player1', 'assets/images/planefly.png', 449, 302, 2);
-
+    this.load.image('coin', 'assets/images/coin.png');
 
 
     this.load.audio('gameMusic', ['assets/audio/Pamgaea.mp3', 'assets/audio/Pamgaea.ogg']);
 
-
-    this.load.bitmapFont('minecraftia', 'assets/fonts/minecraftia/minecraftia.png', 'assets/fonts/minecraftia/minecraftia.xml');
 
     this.load.onLoadComplete.add(this.onLoadComplete, this);
   },

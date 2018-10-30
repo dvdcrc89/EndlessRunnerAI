@@ -1,16 +1,18 @@
 JustRun.Game = {
 
   create: function() {
+    this.coinTimer=10;    
     this.jumpesN = 0;
-    this.game.physics.startSystem(Phaser.Physics.ARCADE);
-    this.game.physics.arcade.gravity.y = 250;
+    this.score = 0;
+    game.physics.startSystem(Phaser.Physics.ARCADE);
+    game.physics.arcade.gravity.y = 250;
       
-    this.background = this.game.add.tileSprite(0, 0, this.game.width, this.game.height-73  , 'background');
+    this.background = game.add.tileSprite(0, 0, game.width, game.height-73  , 'background');
     this.background.autoScroll(-100, 0);
-    this.ground = this.game.add.tileSprite(0, this.game.height - 73, this.game.width, 73, 'ground');
+    this.ground = game.add.tileSprite(0, game.height - 73, game.width, 73, 'ground');
     this.ground.autoScroll(-400, 0);
-      
-    this.player = this.add.sprite(300, this.game.height-380, 'player');
+          
+    this.player = this.add.sprite(300, game.height-380, 'player');
     this.player.anchor.setTo();
     this.player.scale.setTo(0.20);
     this.player.animations.add('run',[24,25,26,27,28,29,30,31,32,33]);
@@ -18,19 +20,23 @@ JustRun.Game = {
     this.player.animations.play('run', 18, true);
     this.playerType = 0;  
  
-    this.game.physics.enable([ this.ground, this.player ], Phaser.Physics.ARCADE);
+    game.physics.enable([ this.ground, this.player ], Phaser.Physics.ARCADE);
     this.player.body.collideWorldBounds = true;
     this.ground.body.collideWorldBounds = true;
     this.ground.body.immovable = true;
     this.ground.body.allowGravity = false;
-   
+    this.coins =  game.add.group();
+    let style = { font: "2rem Arial", fill: "#ff0044", align: "center" };
+    this.scoreText = game.add.text(10, 10, 'Score: '+this.score, style);
+    this.timer = game.time.events.loop(200,this.createCoin,this)
 
-    this.scoreText = this.game.add.bitmapText(10,10, 'minecraftia', 'Score: 0', 24);
 },
   update: function() {
-      
-    this.game.physics.arcade.collide(this.player, this.ground);
-
+    this.scoreText.destroy();
+    let style = { font: "2rem Arial", fill: "#ff0044", align: "center" };
+    this.scoreText = game.add.text(10, 10, 'Score: '+this.score, style);
+  
+    game.physics.arcade.collide(this.player, this.ground);
     if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT)){
         this.transformPlane()
         console.log(this.playerType)
@@ -50,10 +56,14 @@ JustRun.Game = {
           this.player.animations.play('run');
           this.jumpesN = 0;
       } 
-       if (this.game.input.keyboard.isDown(Phaser.Keyboard.DOWN)){
+       if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)){
           this.jump();
+
           }
-      
+     
+     
+     game.physics.arcade.overlap(this.coins, this.player, this.getCoin, null, this);
+   
 
 
 
@@ -68,7 +78,7 @@ JustRun.Game = {
         this.player.scale.setTo(0.35);
         this.player.animations.add('run');
         this.player.animations.play('run', 18, true);
-        this.game.physics.enable([ this.ground, this.player ], Phaser.Physics.ARCADE)
+        game.physics.enable([ this.ground, this.player ], Phaser.Physics.ARCADE)
         this.player.body.collideWorldBounds = true;
         this.player.body.bounce.set(.8);
         this.ground.body.collideWorldBounds = true;
@@ -77,7 +87,7 @@ JustRun.Game = {
         this.background.autoScroll(-400, 0);
         this.ground.autoScroll(-600, 0);
         this.playerType = 2;
-        this.game.physics.arcade.gravity.y = 550;
+        game.physics.arcade.gravity.y = 550;
 
     },
     
@@ -90,7 +100,7 @@ JustRun.Game = {
         this.player.scale.setTo(0.24);
         this.player.animations.add('run',[20,21,22,23,24,25,26,27]);
         this.player.animations.play('run', 18, true);
-        this.game.physics.enable([ this.ground, this.player ], Phaser.Physics.ARCADE);
+        game.physics.enable([ this.ground, this.player ], Phaser.Physics.ARCADE);
         this.player.body.collideWorldBounds = true;
         this.ground.body.collideWorldBounds = true;
         this.ground.body.immovable = true;
@@ -98,7 +108,7 @@ JustRun.Game = {
         this.background.autoScroll(-300, 0);
         this.ground.autoScroll(-500, 0);
         this.playerType = 1;
-        this.game.physics.arcade.gravity.y = 250;
+        game.physics.arcade.gravity.y = 250;
 
     },
     
@@ -111,7 +121,7 @@ JustRun.Game = {
         this.player.scale.setTo(0.20);
         this.player.animations.add('run',[24,25,26,27,28,29,30,31,32,33]);
         this.player.animations.play('run', 18, true);
-        this.game.physics.enable([ this.ground, this.player ], Phaser.Physics.ARCADE);
+        game.physics.enable([ this.ground, this.player ], Phaser.Physics.ARCADE);
         this.player.body.collideWorldBounds = true;
         this.ground.body.collideWorldBounds = true;
         this.ground.body.immovable = true;
@@ -119,7 +129,7 @@ JustRun.Game = {
         this.background.autoScroll(-100, 0);
         this.ground.autoScroll(-400, 0);
         this.playerType = 0;
-        this.game.physics.arcade.gravity.y = 250;
+        game.physics.arcade.gravity.y = 250;
 
     },
     jump: function(){
@@ -129,6 +139,7 @@ JustRun.Game = {
                         this.player.animations.add('jump',[14,15,16,17,18,19,20,21,22,23]);
                         this.player.animations.play('jump');
                         this.player.body.velocity.y = -250;
+
                         }
                         break;
             case 1:  
@@ -146,5 +157,26 @@ JustRun.Game = {
                         break;
         
     }
+    },
+    createCoin: function(){
+        x=1200;   
+        y=420-(200*Math.floor(Math.random() * 3));
+        coin = this.add.sprite(x, y, 'coin');
+        coin.scale.setTo(0.2);
+        game.physics.arcade.enableBody(coin);
+        
+        coin.body.velocity.x= -350;
+        coin.body.allowGravity = false;
+     game.physics.enable([coin, this.player ], Phaser.Physics.ARCADE)
+
+	    game.physics.arcade.overlap(this.player,coin,this.test);
+
+
+        this.coins.add(coin);  
+    },
+    getCoin:function(player,coin){
+        this.score++;
+        console.log(this.score);
+        coin.kill();
     }
 };
