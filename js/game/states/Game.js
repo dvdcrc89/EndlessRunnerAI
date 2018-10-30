@@ -30,7 +30,10 @@ JustRun.Game = {
     this.scoreText = game.add.text(10, 10, 'Score: '+this.score, style);
     this.timer = game.time.events.loop(200,this.createCoin,this)
     this.planeUpgrade;
-      this.createUpgrade();
+    this.timer2 = game.time.events.loop(20000,this.createUpgrade,this)
+  
+  
+    
 
 },
   update: function() {
@@ -39,10 +42,7 @@ JustRun.Game = {
     this.scoreText = game.add.text(10, 10, 'Score: '+this.score, style);
   
     game.physics.arcade.collide(this.player, this.ground);
-    if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT)){
-        this.transformPlane()
-        console.log(this.playerType)
-    }
+    
     if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)){
         this.transormRobot()
          console.log(this.playerType)
@@ -67,6 +67,7 @@ JustRun.Game = {
      game.physics.arcade.overlap(this.coins, this.player, this.getCoin, null, this);
    
      game.physics.arcade.overlap(this.player,this.planeUpgrade,this.transformPlane,null,this);
+   
 
 
 
@@ -185,17 +186,17 @@ JustRun.Game = {
         coin.kill();
     },
     createUpgrade: function(){
-        
-        x=1200;
-        y=this.game.height-152;
-
-        planeUpgrade = this.add.sprite(x, y, 'planeUpgrade');
-        game.physics.arcade.enableBody(planeUpgrade);
-        planeUpgrade.body.allowGravity = false;
-       
-        planeUpgrade.scale.setTo(0.3);
-        planeUpgrade.body.velocity.x = -350
-        this.planeUpgrade = planeUpgrade;
-        
+        if(this.playerType != 2){
+            x=1200;
+            y=this.game.height-152;
+            planeUpgrade = this.add.sprite(x, y, 'planeUpgrade');
+            game.physics.arcade.enableBody(planeUpgrade);
+            planeUpgrade.body.allowGravity = false;
+            planeUpgrade.outOfBoundsKill = true;
+            planeUpgrade.scale.setTo(0.3);
+            planeUpgrade.body.velocity.x = -350
+            this.planeUpgrade = planeUpgrade;
+        }
+    
     }
 };
