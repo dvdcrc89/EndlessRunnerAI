@@ -29,6 +29,8 @@ JustRun.Game = {
     let style = { font: "2rem Arial", fill: "#ff0044", align: "center" };
     this.scoreText = game.add.text(10, 10, 'Score: '+this.score, style);
     this.timer = game.time.events.loop(200,this.createCoin,this)
+    this.planeUpgrade;
+      this.createUpgrade();
 
 },
   update: function() {
@@ -64,12 +66,13 @@ JustRun.Game = {
      
      game.physics.arcade.overlap(this.coins, this.player, this.getCoin, null, this);
    
+     game.physics.arcade.overlap(this.player,this.planeUpgrade,this.transformPlane,null,this);
 
 
 
   },
     transformPlane: function(){
-        
+        this.planeUpgrade.destroy();
         x = this.player.x;
         y = this.player.y;
         console.log(x,y);
@@ -87,7 +90,8 @@ JustRun.Game = {
         this.background.autoScroll(-400, 0);
         this.ground.autoScroll(-600, 0);
         this.playerType = 2;
-        game.physics.arcade.gravity.y = 550;
+
+//        game.physics.arcade.gravity.y = 550;
 
     },
     
@@ -108,6 +112,7 @@ JustRun.Game = {
         this.background.autoScroll(-300, 0);
         this.ground.autoScroll(-500, 0);
         this.playerType = 1;
+
         game.physics.arcade.gravity.y = 400;
 
     },
@@ -129,6 +134,7 @@ JustRun.Game = {
         this.background.autoScroll(-100, 0);
         this.ground.autoScroll(-400, 0);
         this.playerType = 0;
+
         game.physics.arcade.gravity.y = 400;
 
     },
@@ -164,11 +170,10 @@ JustRun.Game = {
         coin = this.add.sprite(x, y, 'coin');
         coin.scale.setTo(0.2);
         game.physics.arcade.enableBody(coin);
-        
-        coin.body.velocity.x= -350;
+        coin.body.velocity.x = -350;
         coin.body.allowGravity = false;
-     game.physics.enable([coin, this.player ], Phaser.Physics.ARCADE)
-
+        game.physics.enable([coin, this.player ], Phaser.Physics.ARCADE)
+        
 	    game.physics.arcade.overlap(this.player,coin,this.test);
 
 
@@ -178,5 +183,19 @@ JustRun.Game = {
         this.score++;
         console.log(this.score);
         coin.kill();
+    },
+    createUpgrade: function(){
+        
+        x=1200;
+        y=this.game.height-152;
+
+        planeUpgrade = this.add.sprite(x, y, 'planeUpgrade');
+        game.physics.arcade.enableBody(planeUpgrade);
+        planeUpgrade.body.allowGravity = false;
+       
+        planeUpgrade.scale.setTo(0.3);
+        planeUpgrade.body.velocity.x = -350
+        this.planeUpgrade = planeUpgrade;
+        
     }
 };

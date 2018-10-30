@@ -19,6 +19,8 @@ JustRun.Preload = {
     this.load.spritesheet('player2', 'assets/images/robot.png', 572, 556,28);
     this.load.spritesheet('player1', 'assets/images/planefly.png', 449, 302, 2);
     this.load.image('coin', 'assets/images/coin.png');
+    this.load.image('planeUpgrade', 'assets/images/planeUpgrade.png');
+
 
 
     this.load.audio('gameMusic', ['assets/audio/Pamgaea.mp3', 'assets/audio/Pamgaea.ogg']);
