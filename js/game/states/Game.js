@@ -30,7 +30,8 @@ JustRun.Game = {
     this.scoreText = game.add.text(10, 10, 'Score: '+this.score, style);
     this.timer = game.time.events.loop(200,this.createCoin,this)
     this.planeUpgrade;
-    this.timer2 = game.time.events.loop(20000,this.createUpgrade,this)
+    this.robotUpgrade;
+    this.timer2 = game.time.events.loop(5000,this.createUpgrade,this)
   
   
     
@@ -68,12 +69,14 @@ JustRun.Game = {
    
      game.physics.arcade.overlap(this.player,this.planeUpgrade,this.transformPlane,null,this);
    
+      game.physics.arcade.overlap(this.player,this.robotUpgrade,this.transormRobot,null,this);
 
 
 
   },
     transformPlane: function(){
         this.planeUpgrade.destroy();
+        this.score= this.score + 70;
         x = this.player.x;
         y = this.player.y;
         console.log(x,y);
@@ -97,6 +100,8 @@ JustRun.Game = {
     },
     
     transormRobot: function(){
+        this.robotUpgrade.destroy();
+        this.score= this.score + 50;
         let x= this.player.x;
         let y= this.player.y;
         console.log(x,y);
@@ -186,7 +191,8 @@ JustRun.Game = {
         coin.kill();
     },
     createUpgrade: function(){
-        if(this.playerType != 2){
+        let number = Math.floor(Math.random()*10)
+        if(number%2 == 0){
             x=1200;
             y=this.game.height-152;
             planeUpgrade = this.add.sprite(x, y, 'planeUpgrade');
@@ -196,6 +202,17 @@ JustRun.Game = {
             planeUpgrade.scale.setTo(0.3);
             planeUpgrade.body.velocity.x = -350
             this.planeUpgrade = planeUpgrade;
+        } else {
+            x=1200;
+            y=this.game.height-170;
+            robotUpgrade = this.add.sprite(x, y, 'robotUpgrade');
+            game.physics.arcade.enableBody(robotUpgrade);
+            robotUpgrade.body.allowGravity = false;
+            robotUpgrade.outOfBoundsKill = true;
+            robotUpgrade.scale.setTo(0.3);
+            robotUpgrade.body.velocity.x = -350
+            this.robotUpgrade = robotUpgrade;
+            
         }
     
     }

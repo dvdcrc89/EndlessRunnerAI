@@ -20,6 +20,7 @@ JustRun.Preload = {
     this.load.spritesheet('player1', 'assets/images/planefly.png', 449, 302, 2);
     this.load.image('coin', 'assets/images/coin.png');
     this.load.image('planeUpgrade', 'assets/images/planeUpgrade.png');
+    this.load.image('robotUpgrade', 'assets/images/robotUpgrade.png');
 
 
 
