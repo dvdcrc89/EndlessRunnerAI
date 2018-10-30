@@ -26,13 +26,16 @@ JustRun.Game = {
     this.ground.body.immovable = true;
     this.ground.body.allowGravity = false;
     this.coins =  game.add.group();
+    this.fireballs =  game.add.group();
+
     let style = { font: "2rem Arial", fill: "#ff0044", align: "center" };
     this.scoreText = game.add.text(10, 10, 'Score: '+this.score, style);
     this.timer = game.time.events.loop(200,this.createCoin,this)
     this.planeUpgrade;
     this.robotUpgrade;
     this.timer2 = game.time.events.loop(5000,this.createUpgrade,this)
-  
+    this.timer3 = game.time.events.loop(2500,this.shootFireball,this)
+
   
     
 
@@ -44,16 +47,7 @@ JustRun.Game = {
   
     game.physics.arcade.collide(this.player, this.ground);
     
-    if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)){
-        this.transormRobot()
-         console.log(this.playerType)
-
-    }
-    if (game.input.keyboard.isDown(Phaser.Keyboard.UP)){
-        this.transormHuman()
-        console.log(this.playerType)
-
-    }
+ 
          
       if(this.player.body.touching.down){
           this.player.animations.play('run');
@@ -66,10 +60,9 @@ JustRun.Game = {
      
      
      game.physics.arcade.overlap(this.coins, this.player, this.getCoin, null, this);
-   
+     game.physics.arcade.overlap(this.fireballs, this.player, this.die, null, this);
      game.physics.arcade.overlap(this.player,this.planeUpgrade,this.transformPlane,null,this);
-   
-      game.physics.arcade.overlap(this.player,this.robotUpgrade,this.transormRobot,null,this);
+     game.physics.arcade.overlap(this.player,this.robotUpgrade,this.transormRobot,null,this);
 
 
 
@@ -95,7 +88,7 @@ JustRun.Game = {
         this.ground.autoScroll(-600, 0);
         this.playerType = 2;
 
-//        game.physics.arcade.gravity.y = 550;
+        game.physics.arcade.gravity.y = 850;
 
     },
     
@@ -123,7 +116,7 @@ JustRun.Game = {
 
     },
     
-    transormHuman: function(){
+    transformHuman: function(){
         let x= this.player.x;
         let y= this.player.y;
         console.log(x,y);
@@ -179,9 +172,6 @@ JustRun.Game = {
         coin.body.velocity.x = -350;
         coin.body.allowGravity = false;
         game.physics.enable([coin, this.player ], Phaser.Physics.ARCADE)
-        
-	    game.physics.arcade.overlap(this.player,coin,this.test);
-
 
         this.coins.add(coin);  
     },
@@ -215,5 +205,36 @@ JustRun.Game = {
             
         }
     
-    }
+    },
+    shootFireball: function(){
+        
+        if(this.playerType==0){ x=1200; y=this.game.height-130}
+        else{
+        x=1200;   
+        y=420-(200*Math.floor(Math.random() * 3));
+        }
+        fireball = this.add.sprite(x, y, 'fireball');
+         fireball.animations.add('shoot',[0,1,2,3]);
+        fireball.animations.play('shoot', 18, true);
+        fireball.scale.setTo(0.5);
+        game.physics.arcade.enableBody(fireball);
+        fireball.body.velocity.x = -550;
+        fireball.body.allowGravity = false;
+        fireball.outOfBoundsKill = true;
+
+        game.physics.enable([fireball, this.player ], Phaser.Physics.ARCADE)
+        
+
+        this.fireballs.add(fireball);
+    
+        
+    },
+     die: function(player,fireball){
+         fireball.kill();
+         if (this.playerType==0){
+             this.game.paused = true;
+         } else {
+             this.transformHuman();
+         }
+     }
 };
