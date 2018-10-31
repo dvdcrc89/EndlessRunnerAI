@@ -5,7 +5,7 @@ JustRun.Game = {
     this.jumpesN = 0;
     this.score = 0;
     game.physics.startSystem(Phaser.Physics.ARCADE);
-    game.physics.arcade.gravity.y = 400;
+    game.physics.arcade.gravity.y = 3400;
       
     this.background = game.add.tileSprite(0, 0, game.width, game.height-73  , 'background');
     this.background.autoScroll(-100, 0);
@@ -34,7 +34,7 @@ JustRun.Game = {
     this.planeUpgrade;
     this.robotUpgrade;
     this.timer2 = game.time.events.loop(5000,this.createUpgrade,this)
-    this.timer3 = game.time.events.loop(2500,this.shootFireball,this)
+    this.timer3 = game.time.events.loop(1000,this.shootFireball,this)
 
   
     
@@ -112,7 +112,7 @@ JustRun.Game = {
         this.ground.autoScroll(-500, 0);
         this.playerType = 1;
 
-        game.physics.arcade.gravity.y = 400;
+        game.physics.arcade.gravity.y = 3400;
 
     },
     
@@ -134,7 +134,7 @@ JustRun.Game = {
         this.ground.autoScroll(-400, 0);
         this.playerType = 0;
 
-        game.physics.arcade.gravity.y = 400;
+        game.physics.arcade.gravity.y = 3400;
 
     },
     jump: function(){
@@ -143,7 +143,7 @@ JustRun.Game = {
                     if(this.player.body.touching.down){
                         this.player.animations.add('jump',[14,15,16,17,18,19,20,21,22,23]);
                         this.player.animations.play('jump');
-                        this.player.body.velocity.y = -280;
+                        this.player.body.velocity.y = -1080;
 
                         }
                         break;
@@ -152,7 +152,7 @@ JustRun.Game = {
                         
                         this.player.animations.add('jump',[10,11,12,13,14,15,16,17,18,19]);
                         this.player.animations.play('jump');
-                        this.player.body.velocity.y = -400;
+                        this.player.body.velocity.y = -1400;
                         this.jumpesN++;
                         }
                         break;
@@ -177,8 +177,10 @@ JustRun.Game = {
     },
     getCoin:function(player,coin){
         this.score++;
+        coin.body.velocity.y= -1050;
+        coin.body.velocity.x = -850;
+        coin.scale.setTo(0.1)
         console.log(this.score);
-        coin.kill();
     },
     createUpgrade: function(){
         let number = Math.floor(Math.random()*10)
@@ -208,15 +210,14 @@ JustRun.Game = {
     },
     shootFireball: function(){
         
-        if(this.playerType==0){ x=1200; y=this.game.height-130}
-        else{
+        let num = Math.floor(Math.random() * 5)
         x=1200;   
-        y=420-(200*Math.floor(Math.random() * 3));
-        }
+        y=this.game.height -(130 + (130 * num)) ;
+//            -(200*Math.floor(Math.random() * 7));
         fireball = this.add.sprite(x, y, 'fireball');
          fireball.animations.add('shoot',[0,1,2,3]);
         fireball.animations.play('shoot', 18, true);
-        fireball.scale.setTo(0.5);
+        fireball.scale.setTo(0.3);
         game.physics.arcade.enableBody(fireball);
         fireball.body.velocity.x = -550;
         fireball.body.allowGravity = false;
