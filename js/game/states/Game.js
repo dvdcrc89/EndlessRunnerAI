@@ -36,8 +36,11 @@ JustRun.Game = {
     this.timer2 = game.time.events.loop(5000,this.createUpgrade,this)
     this.timer3 = game.time.events.loop(1000,this.shootFireball,this)
 
-  
-    
+    this.coinAudio = game.add.audio('coinAudio');
+        this.ugradeAudio = game.add.audio('upgradeAudio');
+    this.hitAudio = game.add.audio('hitAudio');
+
+
 
 },
   update: function() {
@@ -63,7 +66,9 @@ JustRun.Game = {
      game.physics.arcade.overlap(this.fireballs, this.player, this.die, null, this);
      game.physics.arcade.overlap(this.player,this.planeUpgrade,this.transformPlane,null,this);
      game.physics.arcade.overlap(this.player,this.robotUpgrade,this.transormRobot,null,this);
-
+     let timerFireball = 1000-this.score/10;
+     if(timerFireball<400) timerFireball=400;
+     this.timer3.delay=timerFireball
 
 
   },
@@ -89,6 +94,7 @@ JustRun.Game = {
         this.playerType = 2;
 
         game.physics.arcade.gravity.y = 850;
+        this.ugradeAudio.play();
 
     },
     
@@ -113,7 +119,7 @@ JustRun.Game = {
         this.playerType = 1;
 
         game.physics.arcade.gravity.y = 3400;
-
+        this.ugradeAudio.play();
     },
     
     transformHuman: function(){
@@ -179,8 +185,9 @@ JustRun.Game = {
         this.score++;
         coin.body.velocity.y= -1050;
         coin.body.velocity.x = -850;
-        coin.scale.setTo(0.1)
-        console.log(this.score);
+        coin.scale.setTo(0.1);
+        this.coinAudio.play();
+        
     },
     createUpgrade: function(){
         let number = Math.floor(Math.random()*10)
@@ -213,9 +220,8 @@ JustRun.Game = {
         let num = Math.floor(Math.random() * 5)
         x=1200;   
         y=this.game.height -(130 + (130 * num)) ;
-//            -(200*Math.floor(Math.random() * 7));
         fireball = this.add.sprite(x, y, 'fireball');
-         fireball.animations.add('shoot',[0,1,2,3]);
+        fireball.animations.add('shoot',[0,1,2,3]);
         fireball.animations.play('shoot', 18, true);
         fireball.scale.setTo(0.3);
         game.physics.arcade.enableBody(fireball);
@@ -235,6 +241,7 @@ JustRun.Game = {
          if (this.playerType==0){
              this.game.paused = true;
          } else {
+             this.hitAudio.play();
              this.transformHuman();
          }
      }

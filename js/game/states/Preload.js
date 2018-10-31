@@ -6,7 +6,7 @@ JustRun.Preload = {
     this.splash.anchor.setTo(0.5);
     this.splash.scale.setTo(0.85)  
 
-    this.preloadBar = this.add.sprite(this.game.world.centerX, this.game.world.centerY + 128, 'preloadbar');    
+    this.preloadBar = this.add.sprite(this.game.world.centerX, this.game.world.centerY + 200, 'preloadbar');    
     this.preloadBar.anchor.setTo(0.5);
 
     this.load.setPreloadSprite(this.preloadBar);
@@ -23,10 +23,11 @@ JustRun.Preload = {
     this.load.image('coin', 'assets/images/coin.png');
     this.load.image('planeUpgrade', 'assets/images/planeUpgrade.png');
     this.load.image('robotUpgrade', 'assets/images/robotUpgrade.png');
+    
 
-
-
-    this.load.audio('gameMusic', ['assets/audio/Pamgaea.mp3', 'assets/audio/Pamgaea.ogg']);
+    this.load.audio('coinAudio','assets/audio/coin.wav')
+     this.load.audio('upgradeAudio','assets/audio/upgrade.wav')
+     this.load.audio('hitAudio','assets/audio/hit.wav')
 
 
     this.load.onLoadComplete.add(this.onLoadComplete, this);
@@ -35,7 +36,7 @@ JustRun.Preload = {
     this.preloadBar.cropEnabled = false;
   }, 
   update: function() {
-    if(this.cache.isSoundDecoded('gameMusic') && this.ready === true) {
+    if(this.ready === true) {
       this.state.start('Game');
     }
   },
