@@ -7,10 +7,10 @@ JustRun.Game = {
     game.physics.startSystem(Phaser.Physics.ARCADE);
     game.physics.arcade.gravity.y = 3400;
       
-    this.background = game.add.tileSprite(0, 0, game.width, game.height-73  , 'background');
-    this.background.autoScroll(-100, 0);
+//    this.background = game.add.tileSprite(0, 0, game.width, game.height-73  , 'background');
+//    this.background.autoScroll(-400, 0);
     this.ground = game.add.tileSprite(0, game.height - 73, game.width, 73, 'ground');
-    this.ground.autoScroll(-400, 0);
+    this.ground.autoScroll(-600, 0);
           
     this.player = this.add.sprite(300, game.height-380, 'player');
     this.player.anchor.setTo();
@@ -89,8 +89,7 @@ JustRun.Game = {
         this.ground.body.collideWorldBounds = true;
         this.ground.body.immovable = true;
         this.ground.body.allowGravity = false;
-        this.background.autoScroll(-400, 0);
-        this.ground.autoScroll(-600, 0);
+    
         this.playerType = 2;
 
         game.physics.arcade.gravity.y = 850;
@@ -114,8 +113,6 @@ JustRun.Game = {
         this.ground.body.collideWorldBounds = true;
         this.ground.body.immovable = true;
         this.ground.body.allowGravity = false;
-        this.background.autoScroll(-300, 0);
-        this.ground.autoScroll(-500, 0);
         this.playerType = 1;
 
         game.physics.arcade.gravity.y = 3400;
@@ -135,9 +132,7 @@ JustRun.Game = {
         this.player.body.collideWorldBounds = true;
         this.ground.body.collideWorldBounds = true;
         this.ground.body.immovable = true;
-        this.ground.body.allowGravity = false;
-        this.background.autoScroll(-100, 0);
-        this.ground.autoScroll(-400, 0);
+        this.ground.body.allowGravity = false
         this.playerType = 0;
 
         game.physics.arcade.gravity.y = 3400;
