@@ -79,7 +79,7 @@ JustRun.Game = {
         y = this.player.y;
         console.log(x,y);
         this.player.destroy(); 
-        this.player = this.add.sprite(x, y, 'player1');
+        this.player = this.add.sprite(x, y-30, 'player1');
         this.player.scale.setTo(0.35);
         this.player.animations.add('run');
         this.player.animations.play('run', 18, true);
@@ -104,7 +104,7 @@ JustRun.Game = {
         let y= this.player.y;
         console.log(x,y);
         this.player.destroy(); 
-        this.player = this.add.sprite(x, y-30, 'player2');
+        this.player = this.add.sprite(x, y-50, 'player2');
         this.player.scale.setTo(0.24);
         this.player.animations.add('run',[20,21,22,23,24,25,26,27]);
         this.player.animations.play('run', 18, true);
