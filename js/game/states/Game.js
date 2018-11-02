@@ -1,19 +1,19 @@
 JustRun.Game = {
 
   create: function() {
-    this.coinTimer=10;    
-    this.jumpesN = 0;
     this.score = 0;
+    this.planeUpgrade;
+    this.robotUpgrade;
+      
     game.physics.startSystem(Phaser.Physics.ARCADE);
     game.physics.arcade.gravity.y = 3400;
       
-//    this.background = game.add.tileSprite(0, 0, game.width, game.height-73  , 'background');
-//    this.background.autoScroll(-400, 0);
+    this.background = game.add.tileSprite(0, 0, game.width, game.height-73  , 'background');
+    this.background.autoScroll(-150, 0);
     this.ground = game.add.tileSprite(0, game.height - 73, game.width, 73, 'ground');
-    this.ground.autoScroll(-600, 0);
+    this.ground.autoScroll(-350, 0);
           
     this.player = this.add.sprite(300, game.height-380, 'player');
-    this.player.anchor.setTo();
     this.player.scale.setTo(0.20);
     this.player.animations.add('run',[24,25,26,27,28,29,30,31,32,33]);
   
@@ -31,13 +31,12 @@ JustRun.Game = {
     let style = { font: "2rem Arial", fill: "#ff0044", align: "center" };
     this.scoreText = game.add.text(10, 10, 'Score: '+this.score, style);
     this.timer = game.time.events.loop(200,this.createCoin,this)
-    this.planeUpgrade;
-    this.robotUpgrade;
+   
     this.timer2 = game.time.events.loop(5000,this.createUpgrade,this)
     this.timer3 = game.time.events.loop(1000,this.shootFireball,this)
 
     this.coinAudio = game.add.audio('coinAudio');
-        this.ugradeAudio = game.add.audio('upgradeAudio');
+    this.ugradeAudio = game.add.audio('upgradeAudio');
     this.hitAudio = game.add.audio('hitAudio');
 
 
@@ -47,15 +46,25 @@ JustRun.Game = {
     this.scoreText.destroy();
     let style = { font: "2rem Arial", fill: "#ff0044", align: "center" };
     this.scoreText = game.add.text(10, 10, 'Score: '+this.score, style);
-  
-    game.physics.arcade.collide(this.player, this.ground);
-    
- 
-         
+    game.physics.arcade.collide(this.player, this.ground);     
       if(this.player.body.touching.down){
           this.player.animations.play('run');
           this.jumpesN = 0;
       } 
+      
+       if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)){
+          this.coins.children.map((coin)=>{
+              if(coin.body.x-this.player.body.x <150)
+              this.getCoin(this.player,coin)
+              
+          });
+           this.fireballs.children.map((fireball)=>{
+               if (fireball.body.x - this.player.body.x <150)
+               fireball.body.velocity.x=+1350
+           })
+
+          }
+      
        if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)){
           this.jump();
 
@@ -173,15 +182,19 @@ JustRun.Game = {
         coin.body.velocity.x = -350;
         coin.body.allowGravity = false;
         game.physics.enable([coin, this.player ], Phaser.Physics.ARCADE)
+        coin.outOfBoundsKill = true;
+
 
         this.coins.add(coin);  
     },
     getCoin:function(player,coin){
-        this.score++;
-        coin.body.velocity.y= -1050;
-        coin.body.velocity.x = -850;
-        coin.scale.setTo(0.1);
-        this.coinAudio.play();
+        if(coin.scale.x>0.1){
+            this.score++;
+            coin.body.velocity.y= -1050;
+            coin.body.velocity.x = -850;
+            coin.scale.setTo(0.1);
+            this.coinAudio.play();
+        }
         
     },
     createUpgrade: function(){
@@ -214,7 +227,7 @@ JustRun.Game = {
         
         let num = Math.floor(Math.random() * 5)
         x=1200;   
-        y=this.game.height -(130 + (130 * num)) ;
+        y=this.game.height -(130 + (this.game.height/5 * num)) ;
         fireball = this.add.sprite(x, y, 'fireball');
         fireball.animations.add('shoot',[0,1,2,3]);
         fireball.animations.play('shoot', 18, true);
