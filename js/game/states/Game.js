@@ -1,7 +1,7 @@
 JustRun.Game = {
 
   create: function() {
-    this.score = 0;
+    this.score = 6000;
     this.planeUpgrade;
     this.robotUpgrade;
             console.log(this.game.width,this.game.height)
@@ -31,9 +31,9 @@ JustRun.Game = {
 
     let style = { font: "2rem Arial", fill: "#ff0044", align: "center" };
     this.scoreText = game.add.text(10, 10, 'Score: '+this.score, style);
-    this.timer = game.time.events.loop(200,this.createCoin,this)
+    this.timer = game.time.events.loop(300,this.createCoin,this)
    
-    this.timer2 = game.time.events.loop(5000,this.createUpgrade,this)
+    this.timer2 = game.time.events.loop(15000,this.createUpgrade,this)
     this.timer3 = game.time.events.loop(1000,this.shootFireball,this)
 
     this.coinAudio = game.add.audio('coinAudio');
@@ -76,15 +76,15 @@ JustRun.Game = {
      game.physics.arcade.overlap(this.fireballs, this.player, this.die, null, this);
      game.physics.arcade.overlap(this.player,this.planeUpgrade,this.transformPlane,null,this);
      game.physics.arcade.overlap(this.player,this.robotUpgrade,this.transormRobot,null,this);
-     let timerFireball = 1000-this.score/10;
-     if(timerFireball<400) timerFireball=400;
+     let timerFireball = 1000-this.score/5;
+     if(timerFireball<500) timerFireball=500;
      this.timer3.delay=timerFireball
 
 
   },
     transformPlane: function(){
         this.planeUpgrade.destroy();
-        this.score= this.score + 70;
+        this.score= this.score + 100;
         x = this.player.x;
         y = this.player.y;
         console.log(x,y);
