@@ -1,10 +1,9 @@
 JustRun.Game = {
 
   create: function() {
-    this.score = 6000;
+    this.score = 0;
     this.planeUpgrade;
     this.robotUpgrade;
-            console.log(this.game.width,this.game.height)
 
     game.physics.startSystem(Phaser.Physics.ARCADE);
     game.physics.arcade.gravity.y = 3400;
@@ -76,6 +75,7 @@ JustRun.Game = {
      game.physics.arcade.overlap(this.fireballs, this.player, this.die, null, this);
      game.physics.arcade.overlap(this.player,this.planeUpgrade,this.transformPlane,null,this);
      game.physics.arcade.overlap(this.player,this.robotUpgrade,this.transormRobot,null,this);
+     
      let timerFireball = 1000-this.score/5;
      if(timerFireball<500) timerFireball=500;
      this.timer3.delay=timerFireball
