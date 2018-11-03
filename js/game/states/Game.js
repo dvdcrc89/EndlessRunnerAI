@@ -4,7 +4,8 @@ JustRun.Game = {
     this.score = 0;
     this.planeUpgrade;
     this.robotUpgrade;
-      
+            console.log(this.game.width,this.game.height)
+
     game.physics.startSystem(Phaser.Physics.ARCADE);
     game.physics.arcade.gravity.y = 3400;
       
@@ -52,19 +53,19 @@ JustRun.Game = {
           this.jumpesN = 0;
       } 
       
-       if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)){
-          this.coins.children.map((coin)=>{
-              if(coin.body.x-this.player.body.x <150)
-              this.getCoin(this.player,coin)
-              
-          });
-           this.fireballs.children.map((fireball)=>{
-               if (fireball.body.x - this.player.body.x <150)
-               fireball.body.velocity.x=+1350
-           })
-
-          }
-      
+//       if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)){
+//          this.coins.children.map((coin)=>{
+//              if(coin.body.x-this.player.body.x <150)
+//              this.getCoin(this.player,coin)
+//              
+//          });
+//           this.fireballs.children.map((fireball)=>{
+//               if (fireball.body.x - this.player.body.x <150)
+//               fireball.body.velocity.x=+1350
+//           })
+//
+//          }
+//      
        if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)){
           this.jump();
 
@@ -174,7 +175,7 @@ JustRun.Game = {
     }
     },
     createCoin: function(){
-        x=1200;   
+        x=this.game.width+100;   
         y=420-(200*Math.floor(Math.random() * 3));
         coin = this.add.sprite(x, y, 'coin');
         coin.scale.setTo(0.2);
@@ -200,7 +201,7 @@ JustRun.Game = {
     createUpgrade: function(){
         let number = Math.floor(Math.random()*10)
         if(number%2 == 0){
-            x=1200;
+            x=this.game.width+100;
             y=this.game.height-152;
             planeUpgrade = this.add.sprite(x, y, 'planeUpgrade');
             game.physics.arcade.enableBody(planeUpgrade);
@@ -210,7 +211,7 @@ JustRun.Game = {
             planeUpgrade.body.velocity.x = -350
             this.planeUpgrade = planeUpgrade;
         } else {
-            x=1200;
+            x=this.game.width+100;
             y=this.game.height-170;
             robotUpgrade = this.add.sprite(x, y, 'robotUpgrade');
             game.physics.arcade.enableBody(robotUpgrade);
@@ -226,7 +227,7 @@ JustRun.Game = {
     shootFireball: function(){
         
         let num = Math.floor(Math.random() * 5)
-        x=1200;   
+        x=this.game.width+100; 
         y=this.game.height -(130 + (this.game.height/5 * num)) ;
         fireball = this.add.sprite(x, y, 'fireball');
         fireball.animations.add('shoot',[0,1,2,3]);

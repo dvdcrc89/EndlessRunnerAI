@@ -14,6 +14,9 @@ JustRun.Boot = {
 
     if (this.game.device.desktop) {
       //  If you have any desktop specific settings, they can go in here
+               this.scale.maxHeight = 653;
+                    this.scale.maxWidth = 1366;
+
       this.scale.pageAlignHorizontally = true;
     } else {
       //  Same goes for mobile settings.
