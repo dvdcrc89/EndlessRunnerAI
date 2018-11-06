@@ -28,7 +28,7 @@ JustRun.Game = {
     this.coins =  game.add.group();
     this.fireballs =  game.add.group();
 
-    let style = { font: "2rem 'Orbitron'", fill: "#ff0044", align: "center" };
+    let style = { font: "2rem Orbitron", fill: "#F3B326", align: "center" };
     this.scoreText = game.add.text(10, 10, 'Score: '+this.score, style);
     this.timer = game.time.events.loop(300,this.createCoin,this)
    
@@ -52,19 +52,22 @@ JustRun.Game = {
           this.jumpesN = 0;
       } 
       
-//       if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)){
-//          this.coins.children.map((coin)=>{
-//              if(coin.body.x-this.player.body.x <150)
-//              this.getCoin(this.player,coin)
-//              
-//          });
-//           this.fireballs.children.map((fireball)=>{
-//               if (fireball.body.x - this.player.body.x <150)
-//               fireball.body.velocity.x=+1350
-//           })
-//
-//          }
-//      
+       if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)){
+          this.coins.children.map((coin)=>{
+              coin.body.velocity.x = -3000;
+              if(coin.body.x-this.player.body.x <500)
+              this.getCoin(this.player,coin);
+              
+          });
+           this.fireballs.children.map((fireball)=>{
+               fireball.body.velocity.x = -3000;
+               if (fireball.body.x - this.player.body.x <500)
+              this.getCoin(this.player,fireball);
+           })
+            this.background.autoScroll(-1500, 0);
+            this.ground.autoScroll(-3500, 0);
+          }
+      
        if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)){
           this.jump();
 
@@ -84,7 +87,7 @@ JustRun.Game = {
   },
     transformPlane: function(){
         this.planeUpgrade.destroy();
-        this.score= this.score + 100;
+        this.score = this.score + 100;
         x = this.player.x;
         y = this.player.y;
         console.log(x,y);
