@@ -28,7 +28,7 @@ JustRun.Game = {
     this.coins =  game.add.group();
     this.fireballs =  game.add.group();
 
-    let style = { font: "2rem Arial", fill: "#ff0044", align: "center" };
+    let style = { font: "2rem 'Orbitron'", fill: "#ff0044", align: "center" };
     this.scoreText = game.add.text(10, 10, 'Score: '+this.score, style);
     this.timer = game.time.events.loop(300,this.createCoin,this)
    
@@ -44,7 +44,7 @@ JustRun.Game = {
 },
   update: function() {
     this.scoreText.destroy();
-    let style = { font: "2rem Arial", fill: "#ff0044", align: "center" };
+    let style = { font: "2.5rem Orbitron", fill: "#F3B326", align: "center" };    
     this.scoreText = game.add.text(10, 10, 'Score: '+this.score, style);
     game.physics.arcade.collide(this.player, this.ground);     
       if(this.player.body.touching.down){
