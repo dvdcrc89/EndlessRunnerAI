@@ -28,11 +28,22 @@ JustRun.Game = {
     this.coins =  game.add.group();
     this.fireballs =  game.add.group();
 
+    //create dog
+    this.dog = this.add.sprite(1000, game.height-380, 'dog');
+    this.dog.scale.setTo(0.15);
+    this.dog.animations.add('run',[8,9,10,11,12,13,14,15,16]);
+    this.dog.animations.play('run', 18, true);
+    game.physics.enable([ this.ground, this.dog ], Phaser.Physics.ARCADE);
+    this.dog.body.collideWorldBounds = true;
+    this.dog.animations.add('jump',[0,1,2,3,4,5,6,7]);
+  
+
+      
     let style = { font: "2rem Orbitron", fill: "#F3B326", align: "center" };
     this.scoreText = game.add.text(10, 10, 'Score: '+this.score, style);
     this.timer = game.time.events.loop(300,this.createCoin,this)
    
-    this.timer2 = game.time.events.loop(15000,this.createUpgrade,this)
+//    this.timer2 = game.time.events.loop(15000,this.createUpgrade,this)
     this.timer3 = game.time.events.loop(1000,this.shootFireball,this)
 
     this.coinAudio = game.add.audio('coinAudio');
@@ -46,28 +57,13 @@ JustRun.Game = {
     this.scoreText.destroy();
     let style = { font: "2.5rem Orbitron", fill: "#F3B326", align: "center" };    
     this.scoreText = game.add.text(10, 10, 'Score: '+this.score, style);
-    game.physics.arcade.collide(this.player, this.ground);     
-      if(this.player.body.touching.down){
-          this.player.animations.play('run');
-          this.jumpesN = 0;
-      } 
-      
-       if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)){
-          this.coins.children.map((coin)=>{
-              coin.body.velocity.x = -3000;
-              if(coin.body.x-this.player.body.x <500)
-              this.getCoin(this.player,coin);
-              
-          });
-           this.fireballs.children.map((fireball)=>{
-               fireball.body.velocity.x = -3000;
-               if (fireball.body.x - this.player.body.x <500)
-              this.getCoin(this.player,fireball);
-           })
-            this.background.autoScroll(-1500, 0);
-            this.ground.autoScroll(-3500, 0);
-          }
-      
+    game.physics.arcade.collide(this.player, this.ground);  
+     game.physics.arcade.collide(this.dog, this.ground);     
+
+    if(this.player.body.touching.down) this.player.animations.play('run');
+    if(this.dog.body.touching.down)    this.dog.animations.play('run');
+
+      console.log(this.dog.body.touching.down);
        if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)){
           this.jump();
 
@@ -82,7 +78,7 @@ JustRun.Game = {
      let timerFireball = 1000-this.score/5;
      if(timerFireball<500) timerFireball=500;
      this.timer3.delay=timerFireball
-
+     this.autoplay(this.dog);
 
   },
     transformPlane: function(){
@@ -256,5 +252,21 @@ JustRun.Game = {
              this.hitAudio.play();
              this.transformHuman();
          }
-     }
+     },
+    autoplay: function (player){
+        let jump = 1000;
+        if(this.playerType===2){
+            jump=350
+        }
+         this.fireballs.children.filter((fireball)=>fireball.body.x - player.body.x >0).map((fireball)=>{
+            
+            if (fireball.body.x - player.body.x < 200 && fireball.body.y> this.game.height-73-130){
+                  if(player.body.touching.down){
+                        player.animations.play('jump');
+                        player.body.velocity.y = -jump;
+
+                        }
+            }
+           })
+    }
 };
