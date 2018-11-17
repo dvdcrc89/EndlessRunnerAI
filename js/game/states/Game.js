@@ -1,3 +1,4 @@
+JustRun.Game = function(){}
 JustRun.Game = {
 
   create: function() {
@@ -29,15 +30,10 @@ JustRun.Game = {
     this.fireballs =  game.add.group();
 
     //create dog
-    this.dog = this.add.sprite(700, game.height-380, 'dog');
-    this.dog.scale.setTo(0.15);
-    this.dog.animations.add('run',[8,9,10,11,12,13,14,15,16]);
-    this.dog.animations.play('run', 18, true);
-    game.physics.enable([ this.ground, this.dog ], Phaser.Physics.ARCADE);
-    this.dog.body.collideWorldBounds = true;
-    this.dog.animations.add('jump',[0,1,2,3,4,5,6,7]);
+    this.dog = new Dog(this.game,700, game.height-380, 'dog');
+      
    this.hit=0;
-                  this.upsidedown=false;
+   this.upsidedown=false;
 
       
     let style = { font: "2rem Orbitron", fill: "#F3B326", align: "center" };
@@ -59,22 +55,16 @@ JustRun.Game = {
     let style = { font: "2.5rem Orbitron", fill: "#F3B326", align: "center" };    
     this.scoreText = game.add.text(10, 10, 'Score: '+this.score, style);
     game.physics.arcade.collide(this.player, this.ground);  
-     game.physics.arcade.collide(this.dog, this.ground);     
-
-    if(this.player.body.touching.down) this.player.animations.play('run');
+    game.physics.arcade.collide(this.dog, this.ground);     
     if(this.dog.body.touching.down)    this.dog.animations.play('run');
+    if(this.player.body.touching.down) this.player.animations.play('run');
 
-      if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) this.goToLane(0)
-      if (game.input.keyboard.isDown(Phaser.Keyboard.UP)){
-          this.goToLane(1)
-
-          }
       
-           if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) this.goToLane(2)
-      if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) this.goToLane(3)
 
      
      game.physics.arcade.overlap(this.coins, this.player, this.getCoin, null, this);
+           game.physics.arcade.overlap(this.coins, this.dog, this.getCoin, null, this);
+
      game.physics.arcade.overlap(this.fireballs, this.player, this.die, null, this);
      game.physics.arcade.overlap(this.player,this.planeUpgrade,this.transformPlane,null,this);
      game.physics.arcade.overlap(this.player,this.robotUpgrade,this.transormRobot,null,this);
@@ -82,7 +72,11 @@ JustRun.Game = {
 //     let timerFireball = 1000-this.score/5;
 //     if(timerFireball<500) timerFireball=500;
      this.timer3.delay-=0.01
-     this.autoplay(this.dog);
+     this.dog.play();
+     if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)){
+          this.dog.isAuto=!this.dog.isAuto;
+         console.log(this.dog.isAuto);
+     }
       this.autoplayerPlane(this.player,this.next);
   },
     transformPlane: function(){
@@ -260,19 +254,6 @@ JustRun.Game = {
              this.transformHuman();
          }
      },
-    autoplay: function (player){
-         player.body.gravity.y=3400;
-         this.fireballs.children.filter((fireball)=>fireball.body.x - player.body.x >0).map((fireball)=>{
-            
-            if (fireball.body.x - player.body.x < 200 && fireball.body.y> this.game.height-73-130){
-                  if(player.body.touching.down){
-                        player.animations.play('jump');
-                        player.body.velocity.y = -1200;
-
-                        }
-            }
-           })
-    },
     autoplayerPlane(player,num){
     let chance = Math.floor(Math.random()*500);
         if(chance===99 && !this.upsidedown) {
