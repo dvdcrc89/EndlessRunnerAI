@@ -14,19 +14,17 @@ Pilot = function(game, x, y, key, frame) {
     game.physics.arcade.gravity.y = 0;
     this.play = function() {
         if (this.isAuto) {
-            let whereIam = 4 - Math.floor(this.body.y / ((this.game.height - 200) / 5));
-            if (whereIam < 0) whereIam = 0;
+          
             
-            JustRun.Game.fireballs.children.filter((fireball) => fireball.body.x - this.body.x > 0).map((fireball) => {
+            JustRun.Game.fireballs.children.filter((fireball) => fireball.body.x > this.body.x && !fireball.forget).map((fireball) => {
+                  let whereIam = 4 - Math.floor(this.body.y / ((this.game.height - 200) / 5));
+                  if (whereIam < 0) whereIam = 0;
                 if (fireball.body.x - this.body.x < 400 && fireball.lane === whereIam) {
-                    
-                    if (fireball.lane >= 2)
-                        n= 0
-                    else 
-                        n = 4;
-
+                    fireball.forget = true;
+                    if (fireball.lane > 2) n= 0
+                    else n = 4;
                     setTimeout(this.goToLane(n), 1000);
-                    
+                    setTimeout(console.log("1"),1000);                
                 }
 
 
@@ -45,7 +43,7 @@ Pilot = function(game, x, y, key, frame) {
 
     this.goToLane = function(lane) {
         let y = this.game.height - (130 + (this.game.height / 5 * lane))
-        game.physics.arcade.moveToXY(this, 300, y, 400);
+        game.physics.arcade.moveToXY(this, 300, y, 600);
 
     }
     

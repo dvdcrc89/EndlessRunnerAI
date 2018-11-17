@@ -40,6 +40,7 @@ JustRun.Game = {
         this.hitAudio = game.add.audio('hitAudio');
     },
     update: function() {
+        this.fireballs.children.filter((fireball)=>fireball.x<0).map((fireball)=>fireball.destroy());
            game.physics.arcade.collide(this.player, this.ground);
         game.physics.arcade.collide(this.dog, this.ground);
         this.dog.play();
@@ -78,9 +79,7 @@ JustRun.Game = {
         game.physics.arcade.overlap(this.player, this.planeUpgrade, this.transformPlane, null, this);
         game.physics.arcade.overlap(this.player, this.robotUpgrade, this.transormRobot, null, this);
 
-        //     let timerFireball = 1000-this.score/5;
-        //     if(timerFireball<500) timerFireball=500;
-        this.timer3.delay -= 0.01
+
 
     },
     createCoin: function() {
