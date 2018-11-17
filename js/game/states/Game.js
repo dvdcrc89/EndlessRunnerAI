@@ -6,11 +6,11 @@ JustRun.Game = {
     this.robotUpgrade;
 
     game.physics.startSystem(Phaser.Physics.ARCADE);
-    game.physics.arcade.gravity.y = 3400;
+    game.physics.arcade.gravity.y = 0;
       
-    this.background = game.add.tileSprite(0, 0, game.width, game.height-73  , 'background');
+    this.background = game.add.tileSprite(0, 0, game.width, game.height-23  , 'background');
     this.background.autoScroll(-150, 0);
-    this.ground = game.add.tileSprite(0, game.height - 73, game.width, 73, 'ground');
+    this.ground = game.add.tileSprite(0, game.height - 23, game.width, 23, 'ground');
     this.ground.autoScroll(-350, 0);
           
     this.player = this.add.sprite(300, game.height-380, 'player');
@@ -29,14 +29,15 @@ JustRun.Game = {
     this.fireballs =  game.add.group();
 
     //create dog
-    this.dog = this.add.sprite(1000, game.height-380, 'dog');
+    this.dog = this.add.sprite(700, game.height-380, 'dog');
     this.dog.scale.setTo(0.15);
     this.dog.animations.add('run',[8,9,10,11,12,13,14,15,16]);
     this.dog.animations.play('run', 18, true);
     game.physics.enable([ this.ground, this.dog ], Phaser.Physics.ARCADE);
     this.dog.body.collideWorldBounds = true;
     this.dog.animations.add('jump',[0,1,2,3,4,5,6,7]);
-  
+   this.hit=0;
+                  this.upsidedown=false;
 
       
     let style = { font: "2rem Orbitron", fill: "#F3B326", align: "center" };
@@ -44,14 +45,14 @@ JustRun.Game = {
     this.timer = game.time.events.loop(300,this.createCoin,this)
    
 //    this.timer2 = game.time.events.loop(15000,this.createUpgrade,this)
-    this.timer3 = game.time.events.loop(1000,this.shootFireball,this)
+    this.timer3 = game.time.events.loop(900,this.shootFireball,this)
 
     this.coinAudio = game.add.audio('coinAudio');
     this.ugradeAudio = game.add.audio('upgradeAudio');
     this.hitAudio = game.add.audio('hitAudio');
-
-
-
+    this.transformPlane();
+  this.player.anchor.setTo(.5,.5);
+//      this.player.scale.y*=-1;
 },
   update: function() {
     this.scoreText.destroy();
@@ -63,45 +64,48 @@ JustRun.Game = {
     if(this.player.body.touching.down) this.player.animations.play('run');
     if(this.dog.body.touching.down)    this.dog.animations.play('run');
 
-      console.log(this.dog.body.touching.down);
-       if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)){
-          this.jump();
+      if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) this.goToLane(0)
+      if (game.input.keyboard.isDown(Phaser.Keyboard.UP)){
+          this.goToLane(1)
 
           }
-     
+      
+           if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) this.goToLane(2)
+      if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) this.goToLane(3)
+
      
      game.physics.arcade.overlap(this.coins, this.player, this.getCoin, null, this);
      game.physics.arcade.overlap(this.fireballs, this.player, this.die, null, this);
      game.physics.arcade.overlap(this.player,this.planeUpgrade,this.transformPlane,null,this);
      game.physics.arcade.overlap(this.player,this.robotUpgrade,this.transormRobot,null,this);
      
-     let timerFireball = 1000-this.score/5;
-     if(timerFireball<500) timerFireball=500;
-     this.timer3.delay=timerFireball
+//     let timerFireball = 1000-this.score/5;
+//     if(timerFireball<500) timerFireball=500;
+     this.timer3.delay-=0.01
      this.autoplay(this.dog);
-
+      this.autoplayerPlane(this.player,this.next);
   },
     transformPlane: function(){
-        this.planeUpgrade.destroy();
+//        this.planeUpgrade.destroy();
         this.score = this.score + 100;
         x = this.player.x;
         y = this.player.y;
-        console.log(x,y);
         this.player.destroy(); 
         this.player = this.add.sprite(x, y-30, 'player1');
-        this.player.scale.setTo(0.35);
+        this.player.scale.setTo(0.24);
         this.player.animations.add('run');
         this.player.animations.play('run', 18, true);
         game.physics.enable([ this.ground, this.player ], Phaser.Physics.ARCADE)
         this.player.body.collideWorldBounds = true;
-        this.player.body.bounce.set(.8);
+//        this.player.body.bounce.set(.8);
         this.ground.body.collideWorldBounds = true;
         this.ground.body.immovable = true;
         this.ground.body.allowGravity = false;
-    
+                this.player.body.allowGravity = false;
+
         this.playerType = 2;
 
-        game.physics.arcade.gravity.y = 850;
+        game.physics.arcade.gravity.y = 0;
         this.ugradeAudio.play();
 
     },
@@ -168,7 +172,7 @@ JustRun.Game = {
                         break;
                 
             case 2:    
-                        this.player.body.velocity.y = -255;
+                        this.player.body.velocity.y = -355;
                         break;
         
     }
@@ -177,7 +181,7 @@ JustRun.Game = {
         x=this.game.width+100;   
         y=420-(200*Math.floor(Math.random() * 3));
         coin = this.add.sprite(x, y, 'coin');
-        coin.scale.setTo(0.2);
+        coin.scale.setTo(0.15);
         game.physics.arcade.enableBody(coin);
         coin.body.velocity.x = -350;
         coin.body.allowGravity = false;
@@ -192,8 +196,8 @@ JustRun.Game = {
             this.score++;
             coin.body.velocity.y= -1050;
             coin.body.velocity.x = -850;
-            coin.scale.setTo(0.1);
-            this.coinAudio.play();
+            coin.scale.setTo(0.07);
+//            this.coinAudio.play();
         }
         
     },
@@ -226,6 +230,7 @@ JustRun.Game = {
     shootFireball: function(){
         
         let num = Math.floor(Math.random() * 5)
+        this.next = num;
         x=this.game.width+100; 
         y=this.game.height -(130 + (this.game.height/5 * num)) ;
         fireball = this.add.sprite(x, y, 'fireball');
@@ -233,40 +238,80 @@ JustRun.Game = {
         fireball.animations.play('shoot', 18, true);
         fireball.scale.setTo(0.3);
         game.physics.arcade.enableBody(fireball);
-        fireball.body.velocity.x = -550;
+        fireball.body.velocity.x = -900;
         fireball.body.allowGravity = false;
         fireball.outOfBoundsKill = true;
-
+        fireball.lane=num;
         game.physics.enable([fireball, this.player ], Phaser.Physics.ARCADE)
         
-
+        
         this.fireballs.add(fireball);
     
         
     },
      die: function(player,fireball){
          fireball.kill();
-         if (this.playerType==0){
-             this.game.paused = true;
+         this.hit++;
+         console.log(this.hit);
+         if (true){
+//             this.game.paused = true;
          } else {
              this.hitAudio.play();
              this.transformHuman();
          }
      },
     autoplay: function (player){
-        let jump = 1000;
-        if(this.playerType===2){
-            jump=350
-        }
+         player.body.gravity.y=3400;
          this.fireballs.children.filter((fireball)=>fireball.body.x - player.body.x >0).map((fireball)=>{
             
             if (fireball.body.x - player.body.x < 200 && fireball.body.y> this.game.height-73-130){
                   if(player.body.touching.down){
                         player.animations.play('jump');
-                        player.body.velocity.y = -jump;
+                        player.body.velocity.y = -1200;
 
                         }
             }
            })
+    },
+    autoplayerPlane(player,num){
+    let chance = Math.floor(Math.random()*500);
+        if(chance===99 && !this.upsidedown) {
+            console.log("upsidedown")
+            this.player.scale.y*=-1;
+            this.upsidedown=true;
+        }else if(chance<5 && this.upsidedown) {
+            this.player.scale.y*=-1;
+            this.upsidedown=false;
+        }
+
+    let whereIam= 4-Math.floor(player.body.y/ ((this.game.height-200)/5)) ;  
+    if(whereIam<0)whereIam=0;    
+            
+            this.fireballs.children.filter((fireball)=>fireball.body.x - player.body.x >0).map((fireball)=>{
+
+                if (fireball.body.x - player.body.x < 400 && fireball.lane === whereIam  ){
+                    if(fireball.lane!=3)
+                        n=3
+                    else if (fireball.lane > 2) 
+                       n = fireball.lane-1;
+                    else
+                       n = fireball.lane+1
+                    
+                    setTimeout(this.goToLane(n),1000);
+                    
+                   }
+                    
+
+            })
+    
+    },
+    goToLane(lane){
+            
+            let y = this.game.height -(130 + (this.game.height/5 * lane))
+            if(this.player.body.y ===y) console.log("ciao")
+            game.physics.arcade.moveToXY(this.player,300,y,400);
+        
+           
+
     }
 };
