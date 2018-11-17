@@ -3,6 +3,7 @@ Pilot = function(game, x, y, key, frame) {
     Phaser.Sprite.call(this, game, x, y, key, frame);
     game.add.existing(this);
     this.isAuto = true;
+    this.anchor.setTo(0.5,0.5);
     this.scale.setTo(0.24);
     this.animations.add('run');
     this.animations.play('run', 18, true);
@@ -10,12 +11,18 @@ Pilot = function(game, x, y, key, frame) {
     this.isAuto=true;
     this.body.collideWorldBounds = true;
     this.body.allowGravity = false;
-
+    this.upsidedown = false;
     game.physics.arcade.gravity.y = 0;
     this.play = function() {
         if (this.isAuto) {
-          
-            
+               let random = Math.floor(Math.random()*1000)
+                if(random==999 && !this.upsidedown ){
+                    this.scale.y*=-1;
+                    this.upsidedown = true
+                }else if(this.upsidedown && random<5){
+                    this.scale.y*=-1;
+                    this.upsidedown = false
+                }
             JustRun.Game.fireballs.children.filter((fireball) => fireball.body.x > this.body.x && !fireball.forget).map((fireball) => {
                   let whereIam = 4 - Math.floor(this.body.y / ((this.game.height - 200) / 5));
                   if (whereIam < 0) whereIam = 0;

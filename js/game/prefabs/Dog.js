@@ -10,16 +10,25 @@ Dog = function(game, x, y, key, frame) {
     this.game.physics.arcade.enableBody(this);
     this.body.collideWorldBounds = true;
     this.animations.add('jump', [0, 1, 2, 3, 4, 5, 6, 7]);
-    this.body.gravity.y =6400;
+    this.body.gravity.y =10400;
+    this.upsidedown=false;
 
     this.play = function() {
         if (this.isAuto) {
+            
             JustRun.Game.fireballs.children.filter((fireball) => fireball.body.x - this.body.x > 0).map((fireball) => {
-
+                let random = Math.floor(Math.random()*1000)
+                if(random==999 && !this.upsidedown ){
+                    this.scale.x*=-1;
+                    this.upsidedown = true
+                }else if(this.upsidedown && random<5){
+                    this.scale.x*=-1;
+                    this.upsidedown = false
+                }
                 if (fireball.body.x - this.body.x < 200 && fireball.body.y > this.game.height - 73 - 130) {
                     if (this.body.touching.down) {
                         this.animations.play('jump');
-                        this.body.velocity.y = -1600;
+                        this.body.velocity.y = -2000;
 
                     }
                 }
@@ -30,7 +39,7 @@ Dog = function(game, x, y, key, frame) {
 
                 if (this.body.touching.down) {
                     this.animations.play('jump');
-                    this.body.velocity.y = -1600;
+                    this.body.velocity.y = -2000;
 
                 }
             }

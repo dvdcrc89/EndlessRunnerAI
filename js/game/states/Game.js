@@ -19,7 +19,7 @@ JustRun.Game = {
         this.ground.body.allowGravity = false;
         this.coins = game.add.group();
         this.fireballs = game.add.group();
-        this.dog = new Dog(this.game, 700, game.height - 380, 'dog');
+        this.dog = new Dog(this.game, 200, game.height - 380, 'dog');
 
         this.hit = 0;
         this.firenum=0;
@@ -33,7 +33,7 @@ JustRun.Game = {
         this.timer = game.time.events.loop(300, this.createCoin, this)
 
         //    this.timer2 = game.time.events.loop(15000,this.createUpgrade,this)
-        this.timer3 = game.time.events.loop(600, this.shootFireball, this)
+        this.timer3 = game.time.events.loop(400, this.shootFireball, this)
 
         this.coinAudio = game.add.audio('coinAudio');
         this.ugradeAudio = game.add.audio('upgradeAudio');
