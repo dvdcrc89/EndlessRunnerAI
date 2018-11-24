@@ -14,8 +14,8 @@ JustRun.Boot = {
 
     if (this.game.device.desktop) {
       //  If you have any desktop specific settings, they can go in here
-               this.scale.maxHeight = 653;
-                    this.scale.maxWidth = 1366;
+        this.scale.maxHeight = 653;
+        this.scale.maxWidth = 1366;
 
       this.scale.pageAlignHorizontally = true;
     } else {
@@ -23,7 +23,7 @@ JustRun.Boot = {
       //  In this case we're saying "scale the game, no lower than 480x260 and no higher than 1024x768"
       this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
       this.scale.minWidth = 568;
-      this.scale.minHeight = 600;                                                                                                                                                                                             
+      this.scale.minHeight = 600;                                                                                                                                                                                          
       this.scale.maxWidth = 2048;
       this.scale.maxHeight = 1536;
       this.scale.forceLandscape = true;

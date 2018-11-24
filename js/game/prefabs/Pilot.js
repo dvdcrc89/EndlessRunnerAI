@@ -1,20 +1,31 @@
-Pilot = function(game, x, y, key, frame) {
+Pilot = function(game, x, y,mode, key,fireballs, frame) {
 
-    Phaser.Sprite.call(this, game, x, y, key, frame);
+    Phaser.Sprite.call(this, game, x, y, key,frame);
     game.add.existing(this);
-    this.isAuto = true;
+    this.forget=[];
+    this.isAuto = mode;
+    this.fixedX = x;
     this.anchor.setTo(0.5,0.5);
     this.scale.setTo(0.24);
-    this.animations.add('run');
+    this.animations.add('run',[1,2]);
+    this.animations.add('die',[0]);
+    this.animations.add('shoot',[3,4,5,6,7]);
+    this.rnd = (Math.random()*100)
+    if(this.rnd>50) this.animations.play('shoot', 18, true);
+    else
     this.animations.play('run', 18, true);
     this.game.physics.arcade.enableBody(this);
-    this.isAuto=true;
+    this.isAuto = true;
     this.body.collideWorldBounds = true;
     this.body.allowGravity = false;
     this.upsidedown = false;
+    this.vel = Math.random()*350;
+
     game.physics.arcade.gravity.y = 0;
     this.play = function() {
         if (this.isAuto) {
+                    this.body.velocity.x = this.vel;
+
                let random = Math.floor(Math.random()*1000)
                 if(random==999 && !this.upsidedown ){
                     this.scale.y*=-1;
@@ -23,26 +34,30 @@ Pilot = function(game, x, y, key, frame) {
                     this.scale.y*=-1;
                     this.upsidedown = false
                 }
-            JustRun.Game.fireballs.children.filter((fireball) => fireball.body.x > this.body.x && !fireball.forget).map((fireball) => {
-                  let whereIam = 4 - Math.floor(this.body.y / ((this.game.height - 200) / 5));
-                  if (whereIam < 0) whereIam = 0;
-                if (fireball.body.x - this.body.x < 400 && fireball.lane === whereIam) {
-                    fireball.forget = true;
-                    if (fireball.lane > 2) n= 0
-                    else n = 4;
+            fireballs.children.filter((fireball) => fireball.body.x > this.body.x && !this.forget.includes(fireball)).map((fireball) => {
+                this.forget.filter(fireball=>fireball.x<0).map(fireball => fireball.destroy());
+                
+                    let whereIam=  10 - Math.floor(this.body.y / ((this.game.height - 200) / 10));
+                if (whereIam<0) whereIam=0; 
+//                if (fireball.body.x - this.body.x < 400 && Math.abs(fireball.lane - whereIam)<=2) {
+            if (fireball.body.x - this.body.x < 400+(this.vel/10) && (Math.abs(fireball.body.y - this.body.y) < 100 )) {
+
+                    this.forget.push(fireball);
+                    if (fireball.lane > 5) n= 0
+                    else n = 5;
                     setTimeout(this.goToLane(n), 1000);
-                    setTimeout(console.log("1"),1000);                
                 }
-
-
             })
 
         } else if (!this.isAuto) {
             
             if (game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
 
-                this.body.velocity.y = -355;
+                this.goToLane(4)
+            }
+            if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) {
 
+                this.goToLane(0)
             }
         }
 
@@ -50,19 +65,20 @@ Pilot = function(game, x, y, key, frame) {
 
     this.goToLane = function(lane) {
         let y = this.game.height - (130 + (this.game.height / 5 * lane))
-        game.physics.arcade.moveToXY(this, 300, y, 600);
+       
+        game.physics.arcade.moveToXY(this,this.fixedX , y, 1400);
 
     }
     
     this.setAuto=function (isAuto){
         if(isAuto){
             this.body.allowGravity = false;
-                    this.isAuto=isAuto;
+            this.isAuto=isAuto;
 
-        }else{
+        } else {
             this.body.allowGravity = true;
-            this.body.gravity.y=850;
-                                this.isAuto=isAuto;
+            this.body.gravity.y=0;
+            this.isAuto=isAuto;
 
         }
         

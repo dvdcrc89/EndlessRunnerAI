@@ -1,8 +1,8 @@
-Dog = function(game, x, y, key, frame) {
+Dog = function(game, x, y, mode, key,fireballs,monster, frame) {
 
     Phaser.Sprite.call(this, game, x, y, key, frame);
     game.add.existing(this);
-    this.isAuto = false;
+    this.isAuto = mode;
     this.scale.setTo(0.15);
     this.anchor.setTo(0.5);
     this.animations.add('run', [8, 9, 10, 11, 12, 13, 14, 15, 16]);
@@ -10,13 +10,20 @@ Dog = function(game, x, y, key, frame) {
     this.game.physics.arcade.enableBody(this);
     this.body.collideWorldBounds = true;
     this.animations.add('jump', [0, 1, 2, 3, 4, 5, 6, 7]);
-    this.body.gravity.y =10400;
+    this.body.gravity.y =8400;
     this.upsidedown=false;
 
     this.play = function() {
         if (this.isAuto) {
+//            if(Math.abs(this.body.x-monster.body.x)<200){
+//                if (this.body.touching.down) {
+//                    this.animations.play('jump');
+//                    this.body.velocity.y = -2000;
+//
+//                }
+//            }
             
-            JustRun.Game.fireballs.children.filter((fireball) => fireball.body.x - this.body.x > 0).map((fireball) => {
+            fireballs.children.filter((fireball) => fireball.body.x - this.body.x > 0).map((fireball) => {
                 let random = Math.floor(Math.random()*1000)
                 if(random==999 && !this.upsidedown ){
                     this.scale.x*=-1;

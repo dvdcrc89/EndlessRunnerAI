@@ -17,18 +17,18 @@ JustRun.Preload = {
 
     this.load.spritesheet('player', 'assets/images/cowboy.png', 423.70, 485,33);
     this.load.spritesheet('player2', 'assets/images/robot.png', 572, 556,28);
-    this.load.spritesheet('player1', 'assets/images/planefly.png', 449, 302, 2);
+    this.load.spritesheet('pilot', 'assets/images/planefly.png', 449.5, 302,7);
     this.load.spritesheet('dog', 'assets/images/dog.png', 547, 470, 16);
     this.load.spritesheet('fireball', 'assets/images/fireball.png', 174, 139, 4);
-
+    this.load.spritesheet('monster', 'assets/images/monster.png', 414, 275, 24);
     this.load.image('coin', 'assets/images/coin.png');
     this.load.image('planeUpgrade', 'assets/images/planeUpgrade.png');
     this.load.image('robotUpgrade', 'assets/images/robotUpgrade.png');
     
 
     this.load.audio('coinAudio','assets/audio/coin.wav')
-     this.load.audio('upgradeAudio','assets/audio/upgrade.wav')
-     this.load.audio('hitAudio','assets/audio/hit.wav')
+    this.load.audio('upgradeAudio','assets/audio/upgrade.wav')
+    this.load.audio('hitAudio','assets/audio/hit.wav')
 
 
     this.load.onLoadComplete.add(this.onLoadComplete, this);
