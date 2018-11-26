@@ -19,8 +19,11 @@ Monster = function(game, x, y, key,players, frame) {
                     let whereIam=  10 - Math.floor(this.body.y / ((this.game.height - 200) / 10));
                      if (whereIam<0) whereIam=0;
 
-    JustRun.Game.shootFireball(whereIam,this.body.x+100,this.body.y+50);
-    
+    JustRun.Game.shootFireball(this.body.x+100,this.body.y+50,-900,0,0.3);
+//    JustRun.Game.shootFireball(this.body.x+100,this.body.y+50,-900,300,0.05);
+//            JustRun.Game.shootFireball(this.body.x+100,this.body.y+50,-900,-300,0.05);
+
+
 
     this.shot=true;
     }

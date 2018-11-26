@@ -21,6 +21,7 @@ Pilot = function(game, x, y,mode, key,fireballs, frame) {
     this.upsidedown = false;
     this.vel = Math.random()*350;
 
+
     game.physics.arcade.gravity.y = 0;
     this.play = function() {
         if (this.isAuto) {
@@ -43,8 +44,9 @@ Pilot = function(game, x, y,mode, key,fireballs, frame) {
             if (fireball.body.x - this.body.x < 400+(this.vel/10) && (Math.abs(fireball.body.y - this.body.y) < 100 )) {
 
                     this.forget.push(fireball);
-                    if (fireball.lane > 5) n= 0
-                    else n = 5;
+                    if (whereIam> 6) n= 0
+                    else if(whereIam<4) n = 5;
+                    else n = [0,5][Math.floor(Math.random()*2)-1]
                     setTimeout(this.goToLane(n), 1000);
                 }
             })

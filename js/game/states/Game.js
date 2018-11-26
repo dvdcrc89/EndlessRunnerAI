@@ -34,15 +34,16 @@ JustRun.Game = {
 
    
 
-            this.timer2 = game.time.events.loop(2000,()=>{
+            this.timer2 = game.time.events.loop(1000,()=>{
                     if(this.players.length<10000){
             this.players.add(new Pilot(this.game, 0, (game.height - Math.random()*300),true, 'pilot',this.fireballs))
         }
             },this)
-        this.timer3 = game.time.events.loop(450, ()=>this.youCanShot=true, this)
-        this.timer4 = game.time.events.loop(4000, ()=>this.messages.children.map(t=>t.destroy()),true, this)
+        this.timer3 = game.time.events.loop(405, ()=>this.youCanShot=true, this)
+        this.timer4 = game.time.events.loop(4000, ()=>this.messages.children.map(t=>t.destroy()), this)
         this.timer5 = game.time.events.loop(1000, ()=>this.combo=0, this)
-
+        this.timer6 = game.time.events.loop(10000, ()=>this.background.tint = Math.random()*0xffffff
+, this)
 
         this.coinAudio = game.add.audio('coinAudio');
         this.ugradeAudio = game.add.audio('upgradeAudio');
@@ -103,29 +104,25 @@ JustRun.Game = {
             coin.body.velocity.y = -1050;
             coin.body.velocity.x = -850;
             coin.scale.setTo(0.07);
-            //            this.coinAudio.play();
+            // this.coinAudio.play();
         }
 
     },
-    shootFireball: function(num,x,y) {
+    shootFireball: function(x,y,velX,velY,size) {
         if(this.youCanShot){
-            console.log(num,x,y);
-    //        let num = Math.floor(Math.random() * 5)
-    //        this.next = num;
-            this.firenum++;
             x = x;
             y = y;
             fireball = this.add.sprite(x, y, 'fireball');
             fireball.animations.add('shoot', [0, 1, 2, 3]);
             fireball.animations.play('shoot', 18, true);
-            fireball.scale.setTo(0.3);
+            fireball.scale.setTo(size);
             game.physics.arcade.enableBody(fireball);
-            fireball.body.velocity.x = -900;
-            fireball.body.velocity.y =0* Math.random()*500*(-1*Math.random()*4)
+            fireball.body.velocity.x = velX;
+            fireball.body.velocity.y = velY
             fireball.body.allowGravity = false;
             fireball.outOfBoundsKill = true;
-            fireball.lane = num;
-            game.physics.enable([fireball, this.players], Phaser.Physics.ARCADE)
+            
+            game.physics.enable(fireball,Phaser.Physics.ARCADE)
             this.fireballs.add(fireball);
             this.youCanShot=false;
         }
@@ -141,12 +138,13 @@ JustRun.Game = {
             this.timer5 = game.time.events.loop(3000, ()=>this.combo=0, this)
          let style = {
             font: "3rem Orbitron",
-            fill: "#FF4136",
+//            fill: "#FF4136",
             align: "center"
         };
-
+            
             this.messages.removeAll();
-        this.messages.add(game.add.text(player.x, player.y, this.combo+'X KILL!', style));
+        this.messages.add(game.add.text(player.x, player.y, this.combo+' KILL!', style));
+    
         this.timer5.delay+=2000;  
         player.rotation += 2; 
           
