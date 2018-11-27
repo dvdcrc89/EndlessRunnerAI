@@ -1,9 +1,8 @@
-Pilot = function(game, x, y,mode, key,fireballs, frame) {
+Pilot = function(game, x, y, key,fireballs, frame) {
 
     Phaser.Sprite.call(this, game, x, y, key,frame);
     game.add.existing(this);
     this.forget=[];
-    this.isAuto = mode;
     this.fixedX = x;
     this.anchor.setTo(0.5,0.5);
     this.scale.setTo(0.24);
@@ -15,18 +14,17 @@ Pilot = function(game, x, y,mode, key,fireballs, frame) {
     else
     this.animations.play('run', 18, true);
     this.game.physics.arcade.enableBody(this);
-    this.isAuto = true;
+
     this.body.collideWorldBounds = true;
     this.body.allowGravity = false;
     this.upsidedown = false;
     this.vel = Math.random()*350;
-
+    this.dead=false;
 
     game.physics.arcade.gravity.y = 0;
-    this.play = function() {
-        if (this.isAuto) {
-                    this.body.velocity.x = this.vel;
-
+    this.update = function() {
+        if(!this.dead){
+                this.body.velocity.x = this.vel;
                let random = Math.floor(Math.random()*1000)
                 if(random==999 && !this.upsidedown ){
                     this.scale.y*=-1;
@@ -51,19 +49,8 @@ Pilot = function(game, x, y,mode, key,fireballs, frame) {
                 }
             })
 
-        } else if (!this.isAuto) {
-            
-            if (game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
+        } }
 
-                this.goToLane(4)
-            }
-            if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) {
-
-                this.goToLane(0)
-            }
-        }
-
-    }
 
     this.goToLane = function(lane) {
         let y = this.game.height - (130 + (this.game.height / 5 * lane))
