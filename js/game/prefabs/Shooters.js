@@ -14,9 +14,10 @@ Shooters = function(game) {
             size: 0.3
             },{
             velX: -900,
-            velY: +60,
-            size: 0.3,
-            }],
+            velY: +Math.random()*100,
+            size: 0.3
+            }
+            ],
         shootRecall:100
     };
     this.shoot= function (x,y){

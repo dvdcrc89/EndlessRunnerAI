@@ -27,7 +27,10 @@ JustRun.Game = {
         this.ground.body.allowGravity = false;
         this.monster = new Monster(this.game, this.game.width - 100, game.height, 'monster', this.players, this.shooters)
         this.youCanShot = true;
-        this.combo = 0;
+        this.combo = {
+            lastKill: this.time.now,
+            killNumber: 0
+        };
         this.timer2 = game.time.events.loop(1000, () => {
             if (this.players.length < 10000) {
                 this.players.add(new Pilot(this.game, 0, (Math.random() * game.height ), 'pilot', this.shooters.fireballs))
@@ -35,7 +38,6 @@ JustRun.Game = {
         }, this)
         this.timer3 = game.time.events.loop(405, () => this.youCanShot = true, this)
         this.timer4 = game.time.events.loop(4000, () => this.messages.children.map(t => t.destroy()), this)
-        this.timer5 = game.time.events.loop(1000, () => this.combo = 0, this)
         this.timer6 = game.time.events.loop(10000, () => this.background.tint = Math.random() * 0xffffff, this)
 
         this.coinAudio = game.add.audio('coinAudio');
@@ -61,23 +63,27 @@ JustRun.Game = {
 
     },
     die: function(fireball, player) {
+        if(this.time.now>this.combo.lastKill) {this.combo.lastKill= this.time.now; this.combo.killNumber= 0}
+
         if (player.x > 50) {
             player.animations.play("die", false);
             player.body.velocity.x = 0;
             player.body.velocity.y = 400;
 
-            this.combo++;
-            this.timer5 = game.time.events.loop(3000, () => this.combo = 0, this)
+            this.combo.lastKill = this.time.now+1000
+            this.combo.killNumber++;
+            
             let style = {
                 font: "3rem Orbitron",
-                //            fill: "#FF4136",
+                 fill: ["#732C7B","#CC0000","#660099","#FFD300","#DF6E21","#2096BA"]
+                        [Math.floor(Math.random()*6)],
                 align: "center"
             };
 
             this.messages.removeAll();
-            this.messages.add(game.add.text(player.x, player.y, this.combo + ' KILL!', style));
+            if (this.combo.killNumber>1)
+            this.messages.add(game.add.text(player.x, player.y, this.combo.killNumber + ' X COMBO KILL!', style));
 
-            this.timer5.delay += 2000;
             player.rotation += 2;
 
             player.tint = 0xF42336;

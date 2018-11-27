@@ -23,6 +23,7 @@ Pilot = function(game, x, y, key,fireballs, frame) {
 
     game.physics.arcade.gravity.y = 0;
     this.update = function() {
+    
         if(this.body.x>game.width-130){
           this.kill();
         }
@@ -30,12 +31,17 @@ Pilot = function(game, x, y, key,fireballs, frame) {
                 this.body.velocity.x = this.vel;
                let random = Math.floor(Math.random()*1000)
                 if(random==999 && !this.upsidedown ){
+                    
                     this.scale.y*=-1;
                     this.upsidedown = true
                 }else if(this.upsidedown && random<5){
                     this.scale.y*=-1;
                     this.upsidedown = false
                 }
+            if(random>990){
+                                    this.goToLane([0,5][Math.floor(Math.random()*2)])
+
+            }
             fireballs.children.filter((fireball) => fireball.body.x > this.body.x && !this.forget.includes(fireball)).map((fireball) => {
                 this.forget.filter(fireball=>fireball.x<0).map(fireball => fireball.destroy());
                 
@@ -43,12 +49,11 @@ Pilot = function(game, x, y, key,fireballs, frame) {
                 if (whereIam<0) whereIam=0; 
 //                if (fireball.body.x - this.body.x < 400 && Math.abs(fireball.lane - whereIam)<=2) {
             if (fireball.body.x - this.body.x < 400+(this.vel/10) && (Math.abs(fireball.body.y - this.body.y) < 100 )) {
-
                     this.forget.push(fireball);
-                    if (whereIam> 6) n= 0
-                    else if(whereIam<4) n = 5;
-                    else n = [0,5][Math.floor(Math.random()*2)-1]
-                    setTimeout(this.goToLane(n), 1000);
+                    if (whereIam> 8) n= 0
+                    else if(whereIam<2) n = 5;
+                    else n = [0,5][Math.floor(Math.random()*2)]
+                    setTimeout(this.goToLane(n), 600+Math.random()*600);
                 }
             })
 
