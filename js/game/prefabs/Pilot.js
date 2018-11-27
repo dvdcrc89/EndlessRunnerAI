@@ -23,6 +23,9 @@ Pilot = function(game, x, y, key,fireballs, frame) {
 
     game.physics.arcade.gravity.y = 0;
     this.update = function() {
+        if(this.body.x>game.width-130){
+          this.kill();
+        }
         if(!this.dead){
                 this.body.velocity.x = this.vel;
                let random = Math.floor(Math.random()*1000)
