@@ -6,12 +6,7 @@ Shooters = function(game) {
     
     this.upgradeLevel = 0;
     this.upgrade= {
-        shots:[{
-            velX: -900,
-            velY: 0,
-            size: 0.3
-            }
-            ],
+        shots:[{velX: -900,velY: 0,size: 0.3}],
         shootRecall:500
     };
     this.shoot= function (x,y){
