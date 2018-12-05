@@ -11,7 +11,7 @@ Monster = function(game, x, y, key,players,shooters,frame) {
     this.body.gravity.y =0;
     this.shot=false;
     
-    this.play = function(){
+    this.update = function(){
     if (game.input.keyboard.isDown(Phaser.Keyboard.UP)) this.body.velocity.y= -900;
     else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) this.body.velocity.y= +900;
     else     this.body.velocity.y= 0
@@ -20,27 +20,13 @@ Monster = function(game, x, y, key,players,shooters,frame) {
                      if (whereIam<0) whereIam=0;
 
     shooters.shoot(this.body.x+100,this.body.y+50,-900,0,0.3);
-//    JustRun.Game.shootFireball(this.body.x+100,this.body.y+50,-900,300,0.05);
-//            JustRun.Game.shootFireball(this.body.x+100,this.body.y+50,-900,-300,0.05);
-
 
 
     this.shot=true;
     }
         
     setInterval(()=>this.shot=false,1000)    
-        
-        
-//        let chance = Math.floor(Math.random()*500);
-//        if(chance===199){
-//        if(this.body.x>this.game.width/2){
-//        this.body.velocity.x= -1100;
-//    }else{
-//        this.body.velocity.x= 1100;
-//
-//    }
-//    }
-//    }
+    
 
     
 };
