@@ -20,7 +20,7 @@ Pilot = function(game, x, y, key, shooter,timeStart, frame) {
     this.upsidedown = false;
     this.vel = Math.random() * 350;
     this.dead = false;
-    this.life=Math.random()*4;
+    this.life=Math.random()*5;
     game.physics.arcade.gravity.y = 0;
     this.update = function() {
 
@@ -82,8 +82,9 @@ Pilot = function(game, x, y, key, shooter,timeStart, frame) {
             this.dead = true;
             let upgrade = Math.floor(Math.random()*(Math.floor(Math.random()*8)+1));
             let upgradeFail = Math.random()*10;
+            console.log("upfrade",upgrade,upgradeFail);
             if(upgrade>upgradeFail) upgrade = 0;
-            console.log(upgrade);
+            
             shooter.getUpgrade(upgrade);
         } else{
               let normalTint= this.tint;
