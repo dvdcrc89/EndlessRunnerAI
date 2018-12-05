@@ -4,7 +4,7 @@ JustRun.Game = {
     create: function() {
         this.score = 0;
         game.physics.startSystem(Phaser.Physics.ARCADE);
-
+        this.gameStartAt=game.time.now;
         this.background = game.add.tileSprite(0, 0, game.width, game.height - 1, 'background');
         this.background.autoScroll(-350, 0);
         this.ground = game.add.tileSprite(0, game.height - 1, game.width, 1, 'ground');
@@ -35,9 +35,11 @@ JustRun.Game = {
         this.ugradeAudio = game.add.audio('upgradeAudio');
         this.hitAudio = game.add.audio('hitAudio');
         this.createPilotTimer = game.time.now;
-        this.createPilotFrequency = 300;
+        this.createPilotFrequency = 800;
     },
     update: function() {
+        this.createPilotFrequency = 800 + ((this.gameStartAt - game.time.now)/30);
+        if(this.createPilotFrequency<150) this.createPilotFrequency = 150;
         if(this.createPilotTimer<game.time.now){
             this.createPilots(1);
             this.createPilotTimer=game.time.now+this.createPilotFrequency;
@@ -78,7 +80,7 @@ JustRun.Game = {
         },
     createPilots:function(numberOfPlayers){
         for(let i=0;i<numberOfPlayers;i++)    
-            this.players.add(new Pilot(this.game, 0, game.height - Math.random()*850, 'pilot', this.shooters,game.time.now));
+            this.players.add(new Pilot(this.game, 0, game.height - Math.random()*850, 'pilot', this.shooters,this.gameStartAt));
 
         
     }
