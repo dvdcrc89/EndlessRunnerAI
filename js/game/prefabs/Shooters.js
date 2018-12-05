@@ -51,7 +51,7 @@ Shooters = function(game) {
                     this.upgradeLevel=5;
                     break;
             case 6: this.upgrade.shots = 
-                    [{velX: -200,velY: 0,size: 0.3,rotation:0.2}];
+                    [{velX: -900,velY: +300,size: 0.3},{velX: -900,velY: -300,size: 0.3},,{velX: -900,velY: 0,size: 0.3}];
                     this.upgradeLevel=6;
                     break;
 
