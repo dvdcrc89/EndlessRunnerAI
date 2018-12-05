@@ -35,7 +35,7 @@ JustRun.Game = {
         this.ugradeAudio = game.add.audio('upgradeAudio');
         this.hitAudio = game.add.audio('hitAudio');
         this.createPilotTimer = game.time.now;
-        this.createPilotFrequency = 2000;
+        this.createPilotFrequency = 300;
     },
     update: function() {
         if(this.createPilotTimer<game.time.now){
@@ -52,28 +52,33 @@ JustRun.Game = {
 
     },
     kill: function(fireball, player) {
-        if(this.time.now>this.combo.lastKill) {this.combo.lastKill= this.time.now; this.combo.killNumber= 0}
+         if(fireball!==player.hittedBy){
             player.die();
-            this.combo.lastKill = this.time.now+1000
-            this.combo.killNumber++;
-            
-            let style = {
-                font: "3rem Orbitron",
-                 fill: ["#732C7B","#CC0000","#660099","#FFD300","#DF6E21","#2096BA"]
-                        [Math.floor(Math.random()*6)],
-                align: "center"
-            };
+            player.hittedBy=fireball; 
+            console.log(player.life);
+            if(player.life<1){
+            if(this.time.now>this.combo.lastKill) {this.combo.lastKill= this.time.now; this.combo.killNumber= 0}
+                this.combo.lastKill = this.time.now+1000
+                this.combo.killNumber++;
 
-            this.messages.removeAll();
-            if (this.combo.killNumber>1)
-                this.messages.add(game.add.text(player.x, player.y, this.combo.killNumber + ' X COMBO KILL!', style));
-            this.players.remove(player);
-            this.dead.add(player);
+                let style = {
+                    font: "3rem Orbitron",
+                     fill: ["#732C7B","#CC0000","#660099","#FFD300","#DF6E21","#2096BA"]
+                            [Math.floor(Math.random()*6)],
+                    align: "center"
+                };
 
+                this.messages.removeAll();
+                if (this.combo.killNumber>1)
+                    this.messages.add(game.add.text(player.x, player.y, this.combo.killNumber + ' X COMBO KILL!', style));
+                this.players.remove(player);
+                this.dead.add(player);
+            }
+         }
         },
     createPilots:function(numberOfPlayers){
         for(let i=0;i<numberOfPlayers;i++)    
-            this.players.add(new Pilot(this.game, 0, game.height - Math.random()*850, 'pilot', this.shooters));
+            this.players.add(new Pilot(this.game, 0, game.height - Math.random()*850, 'pilot', this.shooters,game.time.now));
 
         
     }

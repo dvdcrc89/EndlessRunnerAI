@@ -1,4 +1,4 @@
-Pilot = function(game, x, y, key, shooter, frame) {
+Pilot = function(game, x, y, key, shooter,timeStart, frame) {
 
     Phaser.Sprite.call(this, game, x, y, key, frame);
     game.add.existing(this);
@@ -20,7 +20,7 @@ Pilot = function(game, x, y, key, shooter, frame) {
     this.upsidedown = false;
     this.vel = Math.random() * 350;
     this.dead = false;
-
+    this.life=Math.random()*4;
     game.physics.arcade.gravity.y = 0;
     this.update = function() {
 
@@ -29,7 +29,7 @@ Pilot = function(game, x, y, key, shooter, frame) {
         }
         if (!this.dead) {
             this.body.velocity.x = this.vel;
-            let random = Math.floor(Math.random() * 1000)
+            let random = Math.floor(Math.random() * 1000);
             if (random == 999 && !this.upsidedown) {
                 this.scale.y *= -1;
                 this.upsidedown = true
@@ -41,19 +41,22 @@ Pilot = function(game, x, y, key, shooter, frame) {
                 this.goToLane([0, 5][Math.floor(Math.random() * 2)])
 
             }
-            shooter.fireballs.children.filter((fireball) => fireball.body.x > this.body.x && !this.forget.includes(fireball)).forEach((fireball) => {
-                this.forget.filter(fireball => fireball.x < 0).forEach(fireball => fireball.destroy());
-                let whereIam = 10 - Math.floor(this.body.y / ((this.game.height - 200) / 10));
-                if (whereIam < 0) whereIam = 0;
-                if (fireball.body.x - this.body.x < 400 + (this.vel / 10) && (Math.abs(fireball.body.y - this.body.y) < 100)) {
-                    this.forget.push(fireball);
-                    if (whereIam > 8) n = 0
-                    else if (whereIam < 2) n = 5;
-                    else n = [0, 5][Math.floor(Math.random() * 2)]
-                    setTimeout(this.goToLane(n), 600 + Math.random() * 600);
-                }
-            })
+            
+            if (Math.random()*((game.time.now-timeStart)/300)>random){
+                shooter.fireballs.children.filter((fireball) => fireball.body.x > this.body.x && !this.forget.includes(fireball)).forEach((fireball) => {
+                    this.forget.filter(fireball => fireball.x < 0).forEach(fireball => fireball.destroy());
+                    let whereIam = 10 - Math.floor(this.body.y / ((this.game.height - 200) / 10));
+                    if (whereIam < 0) whereIam = 0;
+                    if (fireball.body.x - this.body.x < 400 + (this.vel / 10) && (Math.abs(fireball.body.y - this.body.y) < 100)) {
+                        this.forget.push(fireball);
+                        if (whereIam > 8) n = 0
+                        else if (whereIam < 2) n = 5;
+                        else n = [0, 5][Math.floor(Math.random() * 2)]
+                        setTimeout(this.goToLane(n), 600 + Math.random() * 600);
+                    }
+                })
 
+            }
         }
     }
 
@@ -66,7 +69,11 @@ Pilot = function(game, x, y, key, shooter, frame) {
     }
     
     this.die= function(){
-            this.animations.play("die", false);
+         this.animations.play("die", false);
+         this.body.velocity.x *= 0.3;
+         this.life--;
+        console.log(this.life)
+        if(this.life<1){
             this.body.velocity.x = 0;
             this.body.velocity.y = 400;
             this.rotation += 2;
@@ -78,6 +85,11 @@ Pilot = function(game, x, y, key, shooter, frame) {
             if(upgrade>upgradeFail) upgrade = 0;
             console.log(upgrade);
             shooter.getUpgrade(upgrade);
+        } else{
+              let normalTint= this.tint;
+              this.tint = 0xF42336;
+              setTimeout(()=>this.tint=normalTint,300)
+        }
            
     }
 
