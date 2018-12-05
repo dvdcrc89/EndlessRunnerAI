@@ -1,4 +1,4 @@
-Pilot = function(game, x, y, key, shooter,timeStart, frame) {
+Pilot = function(game, x, y, key, shooter,timeStart,isArmed,isInteligent, frame) {
 
     Phaser.Sprite.call(this, game, x, y, key, frame);
     game.add.existing(this);
@@ -6,11 +6,12 @@ Pilot = function(game, x, y, key, shooter,timeStart, frame) {
     this.fixedX = x;
     this.anchor.setTo(0.5, 0.5);
     this.scale.setTo(0.24);
+    this.scale.x *= -1;
     this.animations.add('run', [1, 2]);
     this.animations.add('die', [0]);
     this.animations.add('shoot', [3, 4, 5, 6, 7]);
-    this.rnd = (Math.random() * 100)
-    if (this.rnd > 50) this.animations.play('shoot', 18, true);
+  
+    if (isArmed) this.animations.play('shoot', 18, true);
     else
         this.animations.play('run', 18, true);
     this.game.physics.arcade.enableBody(this);
@@ -18,17 +19,26 @@ Pilot = function(game, x, y, key, shooter,timeStart, frame) {
     this.body.collideWorldBounds = true;
     this.body.allowGravity = false;
     this.upsidedown = false;
-    this.vel = Math.random() * 350;
+    if(isArmed)
+        this.vel = -(Math.random() * 350)-30;
+    else
+        this.vel = -(Math.random() * 150)-20;
+
+    if(isInteligent) this.vel-=100;
+    
+
     this.dead = false;
     this.life=Math.random()*5;
     game.physics.arcade.gravity.y = 0;
     this.update = function() {
+     this.body.velocity.x = this.vel;
 
-        if (this.body.x > game.width - 130) {
-            this.kill();
+        if (this.body.x <130) {
+            this.dead=true;
+            this.destroy();
         }
-        if (!this.dead) {
-            this.body.velocity.x = this.vel;
+
+        if (!this.dead && isInteligent) {
             let random = Math.floor(Math.random() * 1000);
             if (random == 999 && !this.upsidedown) {
                 this.scale.y *= -1;
@@ -42,7 +52,7 @@ Pilot = function(game, x, y, key, shooter,timeStart, frame) {
 
             }
             
-            if (Math.random()*((game.time.now-timeStart)/300)>random){
+          
                 shooter.fireballs.children.filter((fireball) => fireball.body.x > this.body.x && !this.forget.includes(fireball)).forEach((fireball) => {
                     this.forget.filter(fireball => fireball.x < 0).forEach(fireball => fireball.destroy());
                     let whereIam = 10 - Math.floor(this.body.y / ((this.game.height - 200) / 10));
@@ -56,7 +66,7 @@ Pilot = function(game, x, y, key, shooter,timeStart, frame) {
                     }
                 })
 
-            }
+    
         }
     }
 
@@ -69,7 +79,7 @@ Pilot = function(game, x, y, key, shooter,timeStart, frame) {
     }
     
     this.die= function(){
-         this.animations.play("die", false);
+         if(!isArmed) this.animations.play("die", false);
          this.body.velocity.x *= 0.3;
          this.life--;
         console.log(this.life)
@@ -80,11 +90,7 @@ Pilot = function(game, x, y, key, shooter,timeStart, frame) {
             this.tint = 0xF42336;
             this.body.collideWorldBounds = false;
             this.dead = true;
-            let upgrade = Math.floor(Math.random()*(Math.floor(Math.random()*8)+1));
-            let upgradeFail = Math.random()*10;
-            console.log("upfrade",upgrade,upgradeFail);
-            if(upgrade>upgradeFail) upgrade = 0;
-            
+            let upgrade = Math.floor(Math.random()*(Math.floor(Math.random()*8)+1));            
             shooter.getUpgrade(upgrade);
         } else{
               let normalTint= this.tint;

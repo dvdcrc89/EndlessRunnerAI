@@ -12,7 +12,7 @@ JustRun.Game = {
         this.coins = game.add.group();
         this.players = game.add.group();
         this.shooters = new Shooters(this.game)
-        this.createPilots(4);
+        this.createPilots(10);
         this.messages = game.add.group()
         this.dead = game.add.group();
 
@@ -22,7 +22,7 @@ JustRun.Game = {
         this.ground.body.collideWorldBounds = true;
         this.ground.body.immovable = true;
         this.ground.body.allowGravity = false;
-        this.monster = new Monster(this.game, this.game.width - 100, game.height, 'monster', this.players, this.shooters)
+        this.monster = new Monster(this.game, 200, game.height, 'monster', this.players, this.shooters)
         this.youCanShot = true;
         this.combo = {
             lastKill: this.time.now,
@@ -35,15 +35,35 @@ JustRun.Game = {
         this.ugradeAudio = game.add.audio('upgradeAudio');
         this.hitAudio = game.add.audio('hitAudio');
         this.createPilotTimer = game.time.now;
-        this.createPilotFrequency = 800;
+        this.createPilotFrequency = 1000;
     },
     update: function() {
-        this.createPilotFrequency = 800 + ((this.gameStartAt - game.time.now)/30);
-        if(this.createPilotFrequency<150) this.createPilotFrequency = 150;
-        if(this.createPilotTimer<game.time.now){
-            this.createPilots(1);
-            this.createPilotTimer=game.time.now+this.createPilotFrequency;
+//        this.createPilotFrequency = 800 + ((this.gameStartAt - game.time.now)/30);
+//        if(this.createPilotFrequency<400) this.createPilotFrequency = 400;
+//        if(this.createPilotTimer<game.time.now && this.players.length <100){
+//            this.createPilots(1);
+//            this.createPilotTimer=game.time.now+this.createPilotFrequency;
+//        }
+        
+        
+        if(game.time.now-this.gameStartAt<20000){
+            if(this.players.length <6){
+                console.log("Step1")
+                this.createPilots(10-this.players.length,false,false);
+            }
+        } else if (game.time.now-this.gameStartAt<40000){
+            console.log("Step2")
+            if(this.players.length <4)
+               this.createPilots(10-this.players.length,true,false);
+
+        } else if (game.time.now-this.gameStartAt<90000 ){
+            console.log(this.players.length)
+                        if(this.players.length <1)
+
+               this.createPilots(4,true,true);
         }
+        
+        
             
         this.shooters.fireballs.children.filter((fireball) => fireball.x < 0).map((fireball) => fireball.destroy());
         game.physics.arcade.collide(this.players, this.ground);
@@ -72,15 +92,16 @@ JustRun.Game = {
 
                 this.messages.removeAll();
                 if (this.combo.killNumber>1)
-                    this.messages.add(game.add.text(player.x, player.y, this.combo.killNumber + ' X COMBO KILL!', style));
+                    this.messages.add(game.add.text(player.x-200, player.y, this.combo.killNumber + ' X HIT!', style));
                 this.players.remove(player);
                 this.dead.add(player);
             }
          }
         },
-    createPilots:function(numberOfPlayers){
+    createPilots:function(numberOfPlayers,areArmed,areInteligents){
         for(let i=0;i<numberOfPlayers;i++)    
-            this.players.add(new Pilot(this.game, 0, game.height - Math.random()*850, 'pilot', this.shooters,this.gameStartAt));
+            this.players.add
+            (new Pilot(this.game, this.game.width, game.height/numberOfPlayers *i, 'pilot', this.shooters,this.gameStartAt,areArmed,areInteligents));
 
         
     }
