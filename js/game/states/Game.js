@@ -54,7 +54,7 @@ JustRun.Game = {
         } else if (game.time.now-this.gameStartAt<40000){
             console.log("Step2")
             if(this.players.length <4)
-               this.createPilots(10-this.players.length,true,false);
+               this.createPilots(6-this.players.length,true,false);
 
         } else if (game.time.now-this.gameStartAt<90000 ){
             console.log(this.players.length)
@@ -68,6 +68,8 @@ JustRun.Game = {
         this.shooters.fireballs.children.filter((fireball) => fireball.x < 0).map((fireball) => fireball.destroy());
         game.physics.arcade.collide(this.players, this.ground);
         game.physics.arcade.overlap(this.shooters.fireballs, this.players, this.kill, null, this);
+        game.physics.arcade.overlap(this.shooters.bullets, this.monster, (player,bullet)=>bullet.kill(), null, this);
+
 
 
 

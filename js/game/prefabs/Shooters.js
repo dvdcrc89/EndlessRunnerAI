@@ -3,13 +3,15 @@ Shooters = function(game) {
     this.fireballs = game.add.group();
     this.isReady = true;
     this.fireballTime = game.time.now;
-    
+    this.bullets = game.add.group();
+
     this.upgradeLevel = 0;
     this.upgrade= {
         shots:[{velX: +900,velY: 0,size: 0.3}],
-        shootRecall:500
+        shootRecall:400
     };
     this.shoot= function (x,y){
+        
         if(game.time.now > this.fireballTime){
 
         this.upgrade.shots.forEach(shot=>{
@@ -35,6 +37,17 @@ Shooters = function(game) {
         }
     }
     
+    this.shootBullet = function(player){
+        let bullet = this.game.add.sprite(player.x-50, player.y, 'bullet');
+            bullet.animations.add('shoot', [0]);
+            bullet.animations.play('shoot', 18, true);
+            bullet.scale.setTo(0.30);
+            game.physics.arcade.enableBody(bullet);
+            bullet.body.velocity.x = -500;
+            this.bullets.add(bullet);
+        }
+    }
+
     
     this.getUpgrade=function(number){
     
@@ -89,7 +102,7 @@ Shooters = function(game) {
         
       
 
-    }
+    
     
     
 Shooters.prototype = Object.create(Phaser.Sprite.prototype);

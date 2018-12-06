@@ -14,10 +14,15 @@ Monster = function(game, x, y, key,players,shooters,frame) {
     this.shot=false;
     
     this.update = function(){
-    if (game.input.keyboard.isDown(Phaser.Keyboard.UP)) this.body.velocity.y= -900;
-    else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) this.body.velocity.y= +900;
+    if (game.input.keyboard.isDown(Phaser.Keyboard.UP)) this.body.velocity.y= -500;
+    else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) this.body.velocity.y= +500;
     else     this.body.velocity.y= 0
-    if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT)&&!this.shot) {
+    
+    if(game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) this.body.velocity.x=-500;
+    else if(game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) this.body.velocity.x=+500;
+    else this.body.velocity.x = 0
+        
+    if (game.input.keyboard.isDown(Phaser.Keyboard.Q)&&!this.shot) {
                     let whereIam=  10 - Math.floor(this.body.y / ((this.game.height - 200) / 10));
                      if (whereIam<0) whereIam=0;
 
