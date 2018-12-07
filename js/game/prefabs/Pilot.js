@@ -4,40 +4,33 @@ Pilot = function(game, x, y, key, shooter,timeStart,isArmed,isInteligent, frame)
     game.add.existing(this);
     this.forget = [];
     this.fixedX = x;
-    this.bullets= game.add.group();
     this.anchor.setTo(0.5, 0.5);
     this.scale.setTo(0.24);
     this.scale.x *= -1;
     this.animations.add('run', [1, 2]);
     this.animations.add('die', [0]);
     this.animations.add('shoot', [3, 4, 5, 6, 7]);
-    this.shootRecall=game.time.now;
+    this.shootRecall = game.time.now;
     if (isArmed) this.animations.play('shoot', 18, true);
-    else
-        this.animations.play('run', 18, true);
-    this.game.physics.arcade.enableBody(this);
+    else this.animations.play('run', 18, true);
 
+    this.game.physics.arcade.enableBody(this);
     this.body.collideWorldBounds = true;
     this.body.allowGravity = false;
     this.upsidedown = false;
-    if(isArmed)
-        this.vel = -(Math.random() * 150)-5;
-    else
-        this.vel = -(Math.random() * 50)-5;
-
-    if(isInteligent) this.vel-=20;
-    
-
+    this.vel = -(Math.random() * 107);
+    this.life=2;
+   
     this.dead = false;
-    this.life=Math.random()*2+1;
-    game.physics.arcade.gravity.y = 0;
     
     this.update = function() {
-     this.body.velocity.x = this.vel;
+        let ratio =  Math.pow(2.0, -10 * (this.game.width-this.x)/this.game.width);
+        this.body.velocity.x =  ratio * this.vel*10;
         if(isArmed && this.shootRecall<=game.time.now){
             shooter.shootBullet(this);
             this.shootRecall= game.time.now+2200;
         } 
+        
         if (this.body.x <130) {
             this.dead=true;
             this.destroy();
@@ -93,14 +86,31 @@ Pilot = function(game, x, y, key, shooter,timeStart,isArmed,isInteligent, frame)
             this.tint = 0xF42336;
             this.body.collideWorldBounds = false;
             this.dead = true;
-//            let upgrade = Math.floor(Math.random()*(Math.floor(Math.random()*8)+1));            
-//            shooter.getUpgrade(upgrade);
+            if(isInteligent){
+            let upgrade = Math.floor(Math.random()*(Math.floor(Math.random()*8)+1));            
+            shooter.getUpgrade(upgrade);
+            }
         } else{
               let normalTint= this.tint;
               this.tint = 0xF42336;
               setTimeout(()=>this.tint=normalTint,300)
         }
            
+    }
+    
+    this.bounce= function(ratio){
+          if (ratio < 1/2.75) {
+                return 7.5625*ratio*ratio
+            } else if (ratio < 2/2.75) {
+                let r = ratio - 1.5/2.75
+                return 7.5625*r*r+0.75
+            } else if (ratio < 2.5/2.75) {
+                let r = ratio-2.25/2.75
+                return 7.5625*r*r+0.9375
+            } else {
+                let r = ratio - 2.625/2.75
+                return 7.5625*r*r+0.984375
+            }
     }
     
     
