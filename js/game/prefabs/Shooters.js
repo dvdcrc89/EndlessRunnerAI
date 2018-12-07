@@ -8,7 +8,8 @@ Shooters = function(game) {
     this.upgradeLevel = 0;
     this.upgrade= {
         shots:[{velX: +900,velY: 0,size: 0.3}],
-        shootRecall:400
+        shootRecall:400,
+        isPerforant:false,
     };
     this.shoot= function (x,y){
         
@@ -25,7 +26,7 @@ Shooters = function(game) {
             fireball.body.allowGravity = false;
             fireball.outOfBoundsKill = true;
             fireball.scale.x *= -1;
-
+            fireball.isPerforant = this.upgrade.isPerforant;
             fireball.update=function(){
                 if(shot.rotation) fireball.rotation+=shot.rotation;
             }
@@ -46,7 +47,7 @@ Shooters = function(game) {
             bullet.body.velocity.x = -500;
             this.bullets.add(bullet);
         }
-    }
+    
 
     
     this.getUpgrade=function(number){
@@ -58,6 +59,7 @@ Shooters = function(game) {
             case 3: this.upgrade.shots = [{velX: +900,velY: 0,size: 0.5}];
                     this.upgradeLevel=3;
                     this.upgrade.shootRecall=500;
+                    this.upgrade.isPerforant=true;
                     break;
             case 4: this.upgrade.shots = [{velX: +900,velY: 0,size: 0.3},{velX: +900,velY: +300,size: 0.3}];
                     this.upgradeLevel=4;
@@ -74,30 +76,30 @@ Shooters = function(game) {
                     this.upgrade.shootRecall=700;
                     break;
 
-//            case 7: this.upgrade.shots = 
-//                [{velX: -900,velY: 0,size: 0.3},{velX: -900,velY: +300,size: 0.3},{velX: -900,velY: -300,size: 0.3},
-//                 {velX: -900,velY: +450,size: 0.3},{velX: -900,velY: -450,size: 0.3}];
-//                    this.upgradeLevel=7;
-//                    break;
-//            case 8: this.upgrade.shots = 
-//                [{velX: -900,velY: 0,size: 0.3},{velX: -900,velY: +300,size: 0.3},{velX: -900,velY: -300,size: 0.3},
-//                 {velX: -900,velY: +450,size: 0.3},{velX: -900,velY: -450,size: 0.3},
-//                {velX: -900,velY: +150,size: 0.3},{velX: -900,velY: -150,size: 0.3}];
-//                    this.upgradeLevel=8;
-//                    break;
-//            case 9: this.upgrade.shots = 
-//                [{velX: -900,velY: 0,size: 0.3,rotation:0.2},
-//                 {velX: -900,velY: +300,size: 0.3, rotation:0.2},
-//                 {velX: -900,velY: -300,size: 0.3, rotation:0.2},
-//                 {velX: -900,velY: +450,size: 0.3, rotation:0.2},
-//                 {velX: -900,velY: -450,size: 0.3, rotation:0.2},
-//                 {velX: -900,velY: +150,size: 0.3, rotation:0.2},
-//                 {velX: -900,velY: -150,size: 0.3,rotation:0.2}];
-//                    this.upgradeLevel=9;
-//                    break;
+            case 7: this.upgrade.shots = 
+                [{velX: -900,velY: 0,size: 0.3},{velX: -900,velY: +300,size: 0.3},{velX: -900,velY: -300,size: 0.3},
+                 {velX: -900,velY: +450,size: 0.3},{velX: -900,velY: -450,size: 0.3}];
+                    this.upgradeLevel=7;
+                    break;
+            case 8: this.upgrade.shots = 
+                [{velX: -900,velY: 0,size: 0.3},{velX: -900,velY: +300,size: 0.3},{velX: -900,velY: -300,size: 0.3},
+                 {velX: -900,velY: +450,size: 0.3},{velX: -900,velY: -450,size: 0.3},
+                {velX: -900,velY: +150,size: 0.3},{velX: -900,velY: -150,size: 0.3}];
+                    this.upgradeLevel=8;
+                    break;
+            case 9: this.upgrade.shots = 
+                [{velX: -900,velY: 0,size: 0.3,rotation:0.2},
+                 {velX: -900,velY: +300,size: 0.3, rotation:0.2},
+                 {velX: -900,velY: -300,size: 0.3, rotation:0.2},
+                 {velX: -900,velY: +450,size: 0.3, rotation:0.2},
+                 {velX: -900,velY: -450,size: 0.3, rotation:0.2},
+                 {velX: -900,velY: +150,size: 0.3, rotation:0.2},
+                 {velX: -900,velY: -150,size: 0.3,rotation:0.2}];
+                    this.upgradeLevel=9;
+                    break;
             }
         }
-    
+}
         
         
       
