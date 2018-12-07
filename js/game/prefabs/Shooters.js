@@ -88,13 +88,13 @@ Shooters = function(game) {
                     this.upgradeLevel=8;
                     break;
             case 9: this.upgrade.shots = 
-                [{velX: -900,velY: 0,size: 0.3,rotation:0.2},
-                 {velX: -900,velY: +300,size: 0.3, rotation:0.2},
-                 {velX: -900,velY: -300,size: 0.3, rotation:0.2},
-                 {velX: -900,velY: +450,size: 0.3, rotation:0.2},
-                 {velX: -900,velY: -450,size: 0.3, rotation:0.2},
-                 {velX: -900,velY: +150,size: 0.3, rotation:0.2},
-                 {velX: -900,velY: -150,size: 0.3,rotation:0.2}];
+                [{velX: +900,velY: 0,size: 0.3,rotation:0.2},
+                 {velX: +900,velY: +300,size: 0.3, rotation:0.2},
+                 {velX: +900,velY: -300,size: 0.3, rotation:0.2},
+                 {velX: +900,velY: +450,size: 0.3, rotation:0.2},
+                 {velX: +900,velY: -450,size: 0.3, rotation:0.2},
+                 {velX: +900,velY: +150,size: 0.3, rotation:0.2},
+                 {velX: +900,velY: -150,size: 0.3,rotation:0.2}];
                     this.upgradeLevel=9;
                     break;
             }
