@@ -19,7 +19,7 @@ Pilot = function(game, x, y, key, shooter,timeStart,isArmed,isInteligent, frame)
     this.body.allowGravity = false;
     this.upsidedown = false;
     this.vel = -(Math.random() * 107);
-    this.life=2;
+    this.life=1+JustRun.Game.difficulty;
    
     this.dead = false;
     
