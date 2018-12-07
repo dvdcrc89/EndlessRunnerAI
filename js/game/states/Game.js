@@ -38,16 +38,9 @@ JustRun.Game = {
                 player.life-=5;
             
         }, null, this);
-
         
         this.stageLoop();
-            
-//        this.shooters.fireballs.children.filter((fireball) => fireball.x > this.game.width).forEach((fireball) => fireball.destroy());
-   
-
-
-
-
+               
 
     },
     kill: function(fireball, player) {
@@ -89,12 +82,12 @@ JustRun.Game = {
             if(this.pilots.length <4+this.difficulty)
                this.createPilots(6+this.difficulty-this.pilots.length,true,false);
 
-        } else if (game.time.now-this.gameStartAt<90000 ){
+        } else if (game.time.now-this.gameStartAt<60000 ){
                         if(this.pilots.length <1+this.difficulty){
                         this.shooters.fireballs.removeAll();    
                         this.createPilots(4+this.difficulty,true,true);
                         }
-        } else if (game.time.now-this.gameStartAt>90000 ){
+        } else if (game.time.now-this.gameStartAt>60000 ){
             this.gameStartAt=game.time.now;
             this.difficulty++;
         }
