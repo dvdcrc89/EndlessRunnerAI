@@ -5,7 +5,7 @@ Monster = function(game, x, y, key,players,shooters,frame) {
     this.scale.setTo(0.5);
     this.anchor.setTo(0.5);
      this.scale.x *= -1;
-
+    this.life = 30;
     this.animations.add('fly', [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19.20,21,22,23]);
     this.animations.play('fly', 18, true);
     this.game.physics.arcade.enableBody(this);
@@ -14,6 +14,19 @@ Monster = function(game, x, y, key,players,shooters,frame) {
     this.shot=false;
     
     this.update = function(){
+        if(this.showLife)this.showLife.destroy();
+        let style = {
+                    font: "1.3rem Orbitron",
+                     fill: ["#ED2939"],
+                    align: "center"
+                };
+
+        this.showLife = this.life > 1 ? game.add.text(this.x, this.y-50, this.life+' /30', style) :
+        game.add.text(this.x, this.y-50, 'DANGER!', style)
+        console.log(this.life);
+        if(this.life<1) {
+            this.kill();
+        }
     if (game.input.keyboard.isDown(Phaser.Keyboard.UP)) this.body.velocity.y= -500;
     else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) this.body.velocity.y= +500;
     else     this.body.velocity.y= 0
