@@ -19,7 +19,7 @@ JustRun.Preload = {
     this.load.spritesheet('player2', 'assets/images/robot.png', 572, 556,28);
     this.load.spritesheet('pilot', 'assets/images/planefly.png', 449.5, 302,7);
     this.load.spritesheet('bullet', 'assets/images/bullet.png', 110, 70, 1);
-    this.load.spritesheet('fireball', 'assets/images/fireball.png', 174, 139, 4);
+    this.load.spritesheet('fireball', 'assets/images/fireball.png', 171, 139, 4);
     this.load.spritesheet('monster', 'assets/images/monster.png', 414, 275, 24);
     this.load.image('coin', 'assets/images/coin.png');
     this.load.image('planeUpgrade', 'assets/images/planeUpgrade.png');
