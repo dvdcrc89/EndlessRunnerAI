@@ -5,7 +5,7 @@ Pilot = function(game, x, y, key, shooter,timeStart,isArmed,isInteligent, frame)
     this.forget = [];
     this.fixedX = x;
     this.anchor.setTo(0.5, 0.5);
-    this.scale.setTo(0.24);
+    this.scale.setTo(0.20);
     this.scale.x *= -1;
     this.animations.add('run', [1, 2]);
     this.animations.add('die', [0]);

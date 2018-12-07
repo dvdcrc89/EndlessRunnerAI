@@ -2,7 +2,7 @@ Monster = function(game, x, y, key,players,shooters,frame) {
 
     Phaser.Sprite.call(this, game, x, y, key, frame);
     game.add.existing(this);
-    this.scale.setTo(0.5);
+    this.scale.setTo(0.3);
     this.anchor.setTo(0.5);
      this.scale.x *= -1;
     this.life = 30;
