@@ -27,9 +27,7 @@ JustRun.Preload = {
     this.load.image('bomb', 'assets/images/upgrades/bomb.png');
     this.load.image('hpbonus', 'assets/images/upgrades/hpbonus.png');
     this.load.image('robotUpgrade', 'assets/images/robotUpgrade.png');
-          this.load.image('button', 'assets/images/button.png');
-
-
+    this.load.image('button', 'assets/images/button.png');
     this.load.audio('upgradeAudio','assets/audio/upgrade.wav')
     this.load.audio('hitAudio','assets/audio/hit.wav')
     this.load.audio('hitPlane','assets/audio/hitPlane.wav')

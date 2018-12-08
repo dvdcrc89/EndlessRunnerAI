@@ -10,19 +10,35 @@ JustRun.MainMenu = {
         this.t = 0;
         this.background.tint = Math.random() * 0xffffff;
         this.initialMenu();
-        console.log(this.buttons);
+        this.titleArray = game.add.group();
         this.menuAudio = game.add.audio('menuAudio');
         this.menuAudio.loop = true;
         this.menuAudio.play();
         game.difficulty = 0;
         game.audio=true;
+        
+        this.title ="SHOOT'EM ALL".split('');
+          this.title.forEach((char,index)=>{
+            let text = game.add.text(200+(index*50), 100, char, {
+                font: "4rem Orbitron",
+                fill: ["#C21807", "#0892D0", "#FFF4E6","#000000"]
+                    [Math.floor(Math.random() * 4)],
+                align: "center"
+            });
+            this.titleArray.add(text);  
+              
+        })
+        console.log(this.titleArray);
     },
     update: function() {
         this.t += 0.016;
         this.ratio = this.t / 2;
         if (this.ratio > 1) this.ratio = 1
+        this.titleArray.children.forEach((text,index)=>{
+            text.x = this.bounce(this.ratio) * 70 * (index + 1.5)+230;
+        })
         this.buttons.children.forEach((button, index) => {
-            button.y = this.bounce(this.ratio) * 100 * (index + 2);
+            button.y = this.bounce(this.ratio) * 100 * (index + 1.5)+130;
             button.textButton.y = button.y;
         });
     },
@@ -42,7 +58,6 @@ JustRun.MainMenu = {
         this.buttons.add(button);
     },
     initialMenu: function() {
-
         this.generateButton(this.game.width / 2, 150, 350, 150, 'button', 'Start', this.primaryColor, () => {
             if (this.randomAudio) this.randomAudio.stop();
             this.state.start('Game');
@@ -64,7 +79,7 @@ JustRun.MainMenu = {
             this.clearOldMenu();
             this.audioMenu();
         })
-        this.generateButton(this.game.width / 2, 350, 350, 150, 'button', 'Back', this.primaryColor, () => {
+        this.generateButton(this.game.width / 2, 450, 350, 150, 'button', 'Back', this.primaryColor, () => {
             this.clearOldMenu();
             this.initialMenu();
         })
@@ -83,7 +98,7 @@ JustRun.MainMenu = {
             this.clearOldMenu();
             this.initialMenu();
         })
-        this.generateButton(this.game.width / 2, 350, 350, 150, 'button', 'Back', this.primaryColor, () => {
+        this.generateButton(this.game.width / 2, 450, 350, 150, 'button', 'Back', this.primaryColor, () => {
             this.clearOldMenu();
             this.settingMenu();
 
@@ -92,7 +107,7 @@ JustRun.MainMenu = {
     audioMenu: function(){
         let audioColor = game.audio === true ? this.activeColor : this.primaryColor;
         let noAudioColor = game.audio === true ? this.primaryColor : this.activeColor;
-              this.generateButton(this.game.width / 2, 250, 350, 150, 'button', 'Loud', audioColor, () => {
+            this.generateButton(this.game.width / 2, 250, 350, 150, 'button', 'Loud', audioColor, () => {
             game.audio = true;
             this.menuAudio.stop();
             this.menuAudio.play();
@@ -105,7 +120,7 @@ JustRun.MainMenu = {
             this.clearOldMenu();
             this.settingMenu();
         })
-        this.generateButton(this.game.width / 2, 350, 350, 150, 'button', 'Back', this.primaryColor, () => {
+        this.generateButton(this.game.width / 2, 450, 350, 150, 'button', 'Back', this.primaryColor, () => {
             this.clearOldMenu();
             this.settingMenu();
 
