@@ -16,29 +16,33 @@ JustRun.MainMenu = {
         this.menuAudio.play();
         game.difficulty = 0;
         game.audio=true;
-        
-        this.title ="SHOOT'EM ALL".split('');
-          this.title.forEach((char,index)=>{
-            let text = game.add.text(200+(index*50), 100, char, {
-                font: "4rem Orbitron",
-                fill: ["#C21807", "#0892D0", "#FFF4E6","#000000"]
-                    [Math.floor(Math.random() * 4)],
-                align: "center"
-            });
-            this.titleArray.add(text);  
-              
-        })
-        console.log(this.titleArray);
+        if (this.game.device.desktop) {
+            this.title ="SHOOT'EM ALL".split('');
+              this.title.forEach((char,index)=>{
+                let text = game.add.text(200+(index*50), 100, char, {
+                    font: "4rem Orbitron",
+                    fill: ["#C21807", "#0892D0", "#FFF4E6","#000000"]
+                        [Math.floor(Math.random() * 4)],
+                    align: "center"
+                });
+                this.titleArray.add(text);  
+
+            })
+        }
     },
     update: function() {
         this.t += 0.016;
         this.ratio = this.t / 2;
         if (this.ratio > 1) this.ratio = 1
-        this.titleArray.children.forEach((text,index)=>{
-            text.x = this.bounce(this.ratio) * 70 * (index + 1.5)+230;
-        })
+         if (this.game.device.desktop) {
+            this.titleArray.children.forEach((text,index)=>{
+                text.x = this.bounce(this.ratio) * 70 * (index + 1.5)+230;
+            })
+         }
+        let marginTop =  this.game.device.desktop ? 100 : 0;
+
         this.buttons.children.forEach((button, index) => {
-            button.y = this.bounce(this.ratio) * 100 * (index + 1.5)+130;
+            button.y = this.bounce(this.ratio) * 100 * (index + 1.5) + marginTop;
             button.textButton.y = button.y;
         });
     },
