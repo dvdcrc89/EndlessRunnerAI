@@ -64,6 +64,7 @@ JustRun.MainMenu = {
     initialMenu: function() {
         this.generateButton(this.game.width / 2, 150, 350, 150, 'button', 'Start', this.primaryColor, () => {
             if (this.randomAudio) this.randomAudio.stop();
+            game.scale.startFullScreen(false);
             this.state.start('Game');
         }, this)
         this.generateButton(this.game.width / 2, 250, 350, 150, 'button', 'Leaderboard', this.primaryColor, () => console.log("1"))
@@ -71,7 +72,10 @@ JustRun.MainMenu = {
             this.clearOldMenu();
             this.settingMenu();
         })
-        this.generateButton(this.game.width / 2, 450, 350, 150, 'button', 'Help', this.primaryColor, () => console.log("3"))
+        this.generateButton(this.game.width / 2, 450, 350, 150, 'button', 'Help', this.primaryColor, () => {
+                    
+                
+        })
     },
     settingMenu: function() {
         this.generateButton(this.game.width / 2, 250, 350, 150, 'button', 'Difficulty', this.primaryColor, () => {
