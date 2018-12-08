@@ -17,7 +17,12 @@ JustRun.Preload = {
     this.load.spritesheet('pilot', 'assets/images/planefly.png', 449.5, 302,7);
     this.load.spritesheet('bullet', 'assets/images/bullet.png', 110, 70, 1);
     this.load.spritesheet('fireball', 'assets/images/fireball.png', 171, 139, 4);
-    this.load.spritesheet('player', 'assets/images/monster.png', 414, 275, 24);
+    // Load a lighter version of Player sprite if on mobile
+    if (this.game.device.desktop) 
+        this.load.spritesheet('player', 'assets/images/monster.png', 414, 275, 24);
+    else  
+        this.load.spritesheet('player', 'assets/images/monsterMobile.png', 414, 275, 3);
+    
     this.load.image('bomb', 'assets/images/upgrades/bomb.png');
     this.load.image('hpbonus', 'assets/images/upgrades/hpbonus.png');
     this.load.image('robotUpgrade', 'assets/images/robotUpgrade.png');
