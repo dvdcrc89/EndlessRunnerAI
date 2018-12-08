@@ -13,12 +13,12 @@ JustRun.Game = {
         this.dead = game.add.group();
         this.difficulty = 0;
         game.physics.enable(this.dead, Phaser.Physics.ARCADE)
-        this.monster = new Monster(this.game, 200, game.height, 'monster', this.pilots, this.shooters)
+        this.player = new Player(this.game, 200, game.height, 'player', this.pilots, this.shooters)
         this.combo = {
             lastKill: this.time.now,
             killNumber: 0
         };
-        this.upgradesManager = new Upgrades(game,this.shooters,this.monster);
+        this.upgradesManager = new Upgrades(game,this.shooters,this.player);
         this.timer6 = game.time.events.loop(10000, () => this.background.tint = Math.random() * 0xffffff, this)
 
         this.upgradeAudio = game.add.audio('upgradeAudio');
@@ -37,18 +37,18 @@ JustRun.Game = {
         
         game.physics.arcade.collide(this.pilots, this.ground);
         game.physics.arcade.overlap(this.shooters.fireballs, this.pilots, this.kill, null, this);
-        game.physics.arcade.overlap(this.upgradesManager.fisicalUpgrades, this.monster, 
+        game.physics.arcade.overlap(this.upgradesManager.fisicalUpgrades, this.player, 
                                     (player,upgrade)=>{
                                             this.upgradesManager.applyUpgrade(player,upgrade);
                                             upgrade.destroy();
                                             this.upgradeAudio.play()}, null, this);
 
-        game.physics.arcade.collide(this.shooters.bullets, this.monster, (player,bullet)=>{
+        game.physics.arcade.collide(this.shooters.bullets, this.player, (player,bullet)=>{
             bullet.destroy();
             player.life--;
             this.hitAudio.play();
         }, null, this);
-        game.physics.arcade.collide(this.pilots, this.monster,(player,pilot)=>{
+        game.physics.arcade.collide(this.pilots, this.player,(player,pilot)=>{
                 pilot.life=1;
                 this.kill(null,pilot);
                 player.life-=5;
@@ -61,7 +61,7 @@ JustRun.Game = {
         this.pilots.children.forEach(pilot=>{
           if (pilot.body.x <130) {
             pilot.dead=true;
-            this.monster.life-=3;
+            this.player.life-=3;
             pilot.destroy();
         }
         })

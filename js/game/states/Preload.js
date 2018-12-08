@@ -14,23 +14,20 @@ JustRun.Preload = {
     this.load.image('background', 'assets/images/background.png');
 
 
-    this.load.spritesheet('player', 'assets/images/cowboy.png', 423.70, 485,33);
-    this.load.spritesheet('player2', 'assets/images/robot.png', 572, 556,28);
     this.load.spritesheet('pilot', 'assets/images/planefly.png', 449.5, 302,7);
     this.load.spritesheet('bullet', 'assets/images/bullet.png', 110, 70, 1);
     this.load.spritesheet('fireball', 'assets/images/fireball.png', 171, 139, 4);
-    this.load.spritesheet('monster', 'assets/images/monster.png', 414, 275, 24);
+    this.load.spritesheet('player', 'assets/images/monster.png', 414, 275, 24);
     this.load.image('bomb', 'assets/images/upgrades/bomb.png');
     this.load.image('hpbonus', 'assets/images/upgrades/hpbonus.png');
     this.load.image('robotUpgrade', 'assets/images/robotUpgrade.png');
     
 
-    this.load.audio('coinAudio','assets/audio/coin.wav')
     this.load.audio('upgradeAudio','assets/audio/upgrade.wav')
     this.load.audio('hitAudio','assets/audio/hit.wav')
     this.load.audio('hitPlane','assets/audio/hitPlane.wav')
     this.load.audio('directHit','assets/audio/directHit.wav')
-          this.load.audio('combo','assets/audio/combo.mp3')
+    this.load.audio('combo','assets/audio/combo.mp3')
 
     this.load.audio('soundtrack','assets/audio/soundtrack.mp3')
   

@@ -1,4 +1,4 @@
-Monster = function(game, x, y, key,players,shooters,frame) {
+Player = function(game, x, y, key,players,shooters,frame) {
 
     Phaser.Sprite.call(this, game, x, y, key, frame);
     game.add.existing(this);
@@ -50,5 +50,5 @@ Monster = function(game, x, y, key,players,shooters,frame) {
 };
 }
 
-Monster.prototype = Object.create(Phaser.Sprite.prototype);
-Monster.prototype.constructor = Monster;
+Player.prototype = Object.create(Phaser.Sprite.prototype);
+Player.prototype.constructor = Player;
