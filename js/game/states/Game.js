@@ -21,27 +21,37 @@ JustRun.Game = {
         this.upgradesManager = new Upgrades(game,this.shooters,this.monster);
         this.timer6 = game.time.events.loop(10000, () => this.background.tint = Math.random() * 0xffffff, this)
 
-        this.ugradeAudio = game.add.audio('upgradeAudio');
+        this.upgradeAudio = game.add.audio('upgradeAudio');
         this.hitAudio = game.add.audio('hitAudio');
+        this.hitPlaneAudio = game.add.audio('hitPlane');
+        this.direcHitAudio = game.add.audio('directHit');
+        this.soundtrack = game.add.audio('soundtrack');
+        this.soundtrack.loop = true;
+        this.soundtrack.play();
+
       
     },
     update: function() {
+        
         game.physics.arcade.collide(this.pilots, this.ground);
         game.physics.arcade.overlap(this.shooters.fireballs, this.pilots, this.kill, null, this);
         game.physics.arcade.overlap(this.upgradesManager.fisicalUpgrades, this.monster, 
                                     (player,upgrade)=>{
                                             this.upgradesManager.applyUpgrade(player,upgrade);
-                                            upgrade.destroy()}, null, this);
+                                            upgrade.destroy();
+                                            this.upgradeAudio.play()}, null, this);
 
         game.physics.arcade.collide(this.shooters.bullets, this.monster, (player,bullet)=>{
             bullet.destroy();
             player.life--;
+            this.hitAudio.play();
         }, null, this);
         game.physics.arcade.collide(this.pilots, this.monster,(player,pilot)=>{
                 pilot.life=1;
                 this.kill(null,pilot);
                 player.life-=5;
-            
+               this.hitAudio.play();
+
         }, null, this);
         
         this.stageLoop();
@@ -98,6 +108,7 @@ JustRun.Game = {
         
     },
     createPilots:function(numberOfpilots,areArmed,areInteligents){
+        this.direcHitAudio.play();
         for(let i=0;i<numberOfpilots;i++)    
             this.pilots.add
             (new Pilot(this.game, this.game.width, game.height/numberOfpilots *i, 'pilot', this.shooters,this.gameStartAt,areArmed,areInteligents));
