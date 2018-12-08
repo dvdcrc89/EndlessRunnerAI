@@ -1,4 +1,4 @@
-Pilot = function(game, x, y, key, shooter,timeStart,isArmed,isInteligent, frame) {
+Pilot = function(game, x, y, key, shooter,timeStart,isArmed,isInteligent,player, frame) {
 
     Phaser.Sprite.call(this, game, x, y, key, frame);
     game.add.existing(this);
@@ -6,6 +6,7 @@ Pilot = function(game, x, y, key, shooter,timeStart,isArmed,isInteligent, frame)
     this.anchor.setTo(0.5, 0.5);
     this.scale.setTo(0.20);
     this.scale.x *= -1;
+    this.player=player;
     this.animations.add('run', [1, 2]);
     this.animations.add('die', [0]);
     this.animations.add('shoot', [3, 4, 5, 6, 7]);
@@ -30,7 +31,11 @@ Pilot = function(game, x, y, key, shooter,timeStart,isArmed,isInteligent, frame)
             shooter.shootBullet(this);
             this.shootRecall= game.time.now+2200;
         } 
-
+            if (this.body.x <130 && !this.dead) {
+                this.dead=true;
+                player.life-=3;
+                this.destroy();
+        }
         if (!this.dead && isInteligent) {
             let random = Math.floor(Math.random() * 1000);
             if (random == 999 && !this.upsidedown) {
