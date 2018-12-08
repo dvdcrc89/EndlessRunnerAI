@@ -24,7 +24,7 @@ Pilot = function(game, x, y, key, shooter,timeStart,isArmed,isInteligent, frame)
     
     this.update = function() {
         let ratio =  Math.pow(2.0, -10 * (this.game.width-this.x)/this.game.width);
-        let velocity = (ratio * this.vel*10)-(25*JustRun.Game.difficulty);
+        let velocity = (ratio * this.vel*10)-(10*JustRun.Game.difficulty);
         this.body.velocity.x = velocity;
         if(isArmed && this.shootRecall<=game.time.now){
             shooter.shootBullet(this);
