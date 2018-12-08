@@ -15,6 +15,7 @@ JustRun.MainMenu = {
         this.menuAudio.loop = true;
         this.menuAudio.play();
         game.difficulty = 0;
+        game.audio=true;
     },
     update: function() {
         this.t += 0.016;
@@ -59,7 +60,10 @@ JustRun.MainMenu = {
             this.difficultyMenu();
 
         })
-        this.generateButton(this.game.width / 2, 350, 350, 150, 'button', 'Audio', this.primaryColor, () => console.log("2"))
+        this.generateButton(this.game.width / 2, 350, 350, 150, 'button', 'Audio', this.primaryColor, () => {
+            this.clearOldMenu();
+            this.audioMenu();
+        })
         this.generateButton(this.game.width / 2, 350, 350, 150, 'button', 'Back', this.primaryColor, () => {
             this.clearOldMenu();
             this.initialMenu();
@@ -84,6 +88,29 @@ JustRun.MainMenu = {
             this.settingMenu();
 
         })
+    },
+    audioMenu: function(){
+        let audioColor = game.audio === true ? this.activeColor : this.primaryColor;
+        let noAudioColor = game.audio === true ? this.primaryColor : this.activeColor;
+              this.generateButton(this.game.width / 2, 250, 350, 150, 'button', 'Loud', audioColor, () => {
+            game.audio = true;
+            this.menuAudio.stop();
+            this.menuAudio.play();
+            this.clearOldMenu();
+            this.settingMenu();
+        })
+        this.generateButton(this.game.width / 2, 350, 350, 150, 'button', 'Mute', noAudioColor, () => {
+            game.audio = false;
+            this.menuAudio.stop();
+            this.clearOldMenu();
+            this.settingMenu();
+        })
+        this.generateButton(this.game.width / 2, 350, 350, 150, 'button', 'Back', this.primaryColor, () => {
+            this.clearOldMenu();
+            this.settingMenu();
+
+        })
+        
     },
     clearOldMenu: function() {
         console.log(game.difficulty)
