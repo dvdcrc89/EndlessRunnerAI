@@ -10,7 +10,7 @@ Upgrades = function(game,shooters,player){
         {
             frame: 'bomb',type: weaponUpgrade,level:1,
              payload:{
-                shots:[{velX: +900,velY: 0,size: 0.3}],
+                shots:[{velX: +1200,velY: 0,size: 0.3}],
                 shootRecall:380,
              }
         },
@@ -24,7 +24,8 @@ Upgrades = function(game,shooters,player){
           {
             frame: 'bomb',type: weaponUpgrade,level:3,
              payload:{
-                shots:[{velX: +900,velY: 0,size: 0.30}],
+                shots:[{velX: +900,velY: 0,size: 0.24},{velX: +900,velY: +300,size: 0.24},{velX: +900,velY: -300,size: 0.24},
+                     {velX: +900,velY: +100,size: 0.24},{velX: +900,velY: -100,size: 0.24}],
                 shootRecall:300,
              }
         },
