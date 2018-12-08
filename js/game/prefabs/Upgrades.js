@@ -24,8 +24,8 @@ Upgrades = function(game,shooters,player){
           {
             frame: 'bomb',type: weaponUpgrade,level:3,
              payload:{
-                shots:[{velX: +900,velY: 0,size: 0.24},{velX: +900,velY: +300,size: 0.24},{velX: +900,velY: -300,size: 0.24},
-                     {velX: +900,velY: +100,size: 0.24},{velX: +900,velY: -100,size: 0.24}],
+                shots:[{velX: +1100,velY: 0,size: 0.24},{velX: +1100,velY: +300,size: 0.24},{velX: +1100,velY: -300,size: 0.24},
+                     {velX: +1100,velY: +100,size: 0.24},{velX: +1100,velY: -100,size: 0.24}],
                 shootRecall:300,
              }
         },
@@ -43,15 +43,16 @@ Upgrades = function(game,shooters,player){
     this.generateUpgrade = function(pilot){
             let chance = Math.floor(Math.random()*20);
             console.log(chance);
-            if (chance<19) return;
-            let validUpgrades = this.upgrades.filter(upgrade=>upgrade.level <= JustRun.Game.difficulty+1);
-            let upgrade = validUpgrades[Math.floor(Math.random()*validUpgrades.length)];
-            let fisicalUpgrade = this.game.add.sprite(pilot.x,pilot.y,upgrade.frame);
-            fisicalUpgrade.scale.setTo(0.15);
-            game.physics.arcade.enableBody(fisicalUpgrade);
-            fisicalUpgrade.body.velocity.x = -100;
-            fisicalUpgrade.effect = upgrade;
-            this.fisicalUpgrades.add(fisicalUpgrade);
+            if (chance>=19 || (player.life===1 && chance>=8)){
+                let validUpgrades = this.upgrades.filter(upgrade=>upgrade.level <= JustRun.Game.difficulty+1);
+                let upgrade = validUpgrades[Math.floor(Math.random()*validUpgrades.length)];
+                let fisicalUpgrade = this.game.add.sprite(pilot.x,pilot.y,upgrade.frame);
+                fisicalUpgrade.scale.setTo(0.15);
+                game.physics.arcade.enableBody(fisicalUpgrade);
+                fisicalUpgrade.body.velocity.x = -100;
+                fisicalUpgrade.effect = upgrade;
+                this.fisicalUpgrades.add(fisicalUpgrade);
+            }
                     
             
     }
