@@ -3,7 +3,7 @@ JustRun.Game = {
 
     create: function() {
         this.score = 0;
-        this.higherCombo=0;
+        this.higherCombo = 0;
         game.physics.startSystem(Phaser.Physics.ARCADE);
         this.gameStartAt = game.time.now;
         this.background = game.add.tileSprite(0, 0, game.width, game.height - 1, 'background');
@@ -12,7 +12,7 @@ JustRun.Game = {
         this.shooters = new Shooters(this.game)
         this.messages = game.add.group()
         this.dead = game.add.group();
-        this.difficulty = 0;
+        this.difficulty = game.difficulty;
         game.physics.enable(this.dead, Phaser.Physics.ARCADE)
         this.player = new Player(this.game, 200, game.height, 'player', this.pilots, this.shooters)
         this.combo = {
@@ -37,15 +37,23 @@ JustRun.Game = {
 
     },
     update: function() {
-            if(this.scoreText) this.scoreText.destroy();
-            if(this.higherComboText) this.higherComboText.destroy();
+        if (this.scoreText) this.scoreText.destroy();
+        if (this.higherComboText) this.higherComboText.destroy();
 
-            let style = { font: "2rem Orbitron", fill: "#fff4e6", align: "center" };    
-            this.scoreText = game.add.text(10, 10, 'Score: '+this.score, style);
-            style = { font: "1rem Orbitron", fill: "#C21807", align: "center" };    
-            this.higherComboText = game.add.text(10, 45, 'Biggest Combo: '+this.higherCombo+"X", style);
+        let style = {
+            font: "2rem Orbitron",
+            fill: "#fff4e6",
+            align: "center"
+        };
+        this.scoreText = game.add.text(10, 10, 'Score: ' + this.score, style);
+        style = {
+            font: "1rem Orbitron",
+            fill: "#C21807",
+            align: "center"
+        };
+        this.higherComboText = game.add.text(10, 45, 'Biggest Combo: ' + this.higherCombo + "X", style);
 
-        
+
         this.manageCollisionAndOverlap();
         this.stageLoop();
     },
@@ -76,10 +84,10 @@ JustRun.Game = {
             this.messages.removeAll();
             if (this.combo.killNumber > 1) {
                 this.messages.add(game.add.text(player.x - 200, player.y, this.combo.killNumber + ' X HIT!', style));
-                this.score+=this.combo.killNumber;
-                if(this.higherCombo<this.combo.killNumber) this.higherCombo = this.combo.killNumber;
+                this.score += this.combo.killNumber;
+                if (this.higherCombo < this.combo.killNumber) this.higherCombo = this.combo.killNumber;
             }
-            this.score+=10;
+            this.score += 10;
             this.upgradesManager.generateUpgrade(player);
             this.pilots.remove(player);
             this.dead.add(player);
@@ -144,7 +152,7 @@ JustRun.Game = {
 
         }, null, this);
     },
-    
+
 
 
 };

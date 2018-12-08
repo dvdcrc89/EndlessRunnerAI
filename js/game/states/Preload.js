@@ -37,7 +37,7 @@ JustRun.Preload = {
     this.load.audio('combo','assets/audio/combo.mp3')
 
     this.load.audio('soundtrack','assets/audio/soundtrack.mp3')
-    this.load.audio('randomSounds','assets/audio/random.wav')
+    this.load.audio('menuAudio','assets/audio/random.wav')
 
   
 
