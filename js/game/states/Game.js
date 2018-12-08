@@ -57,6 +57,14 @@ JustRun.Game = {
         }, null, this);
         
         this.stageLoop();
+        
+        this.pilots.children.forEach(pilot=>{
+          if (pilot.body.x <130) {
+            pilot.dead=true;
+            this.monster.life-=3;
+            pilot.destroy();
+        }
+        })
                
 
     },
