@@ -13,6 +13,7 @@ JustRun.Preload = {
 
     this.load.image('background', 'assets/images/background.png');
 
+          this.load.image('menubg', 'assets/images/menubg.png');
 
     this.load.spritesheet('pilot', 'assets/images/planefly.png', 449.5, 302,7);
     this.load.spritesheet('bullet', 'assets/images/bullet.png', 110, 70, 1);
@@ -26,7 +27,8 @@ JustRun.Preload = {
     this.load.image('bomb', 'assets/images/upgrades/bomb.png');
     this.load.image('hpbonus', 'assets/images/upgrades/hpbonus.png');
     this.load.image('robotUpgrade', 'assets/images/robotUpgrade.png');
-    
+          this.load.image('button', 'assets/images/button.png');
+
 
     this.load.audio('upgradeAudio','assets/audio/upgrade.wav')
     this.load.audio('hitAudio','assets/audio/hit.wav')
@@ -35,6 +37,8 @@ JustRun.Preload = {
     this.load.audio('combo','assets/audio/combo.mp3')
 
     this.load.audio('soundtrack','assets/audio/soundtrack.mp3')
+    this.load.audio('randomSounds','assets/audio/random.wav')
+
   
 
 
@@ -45,7 +49,7 @@ JustRun.Preload = {
   }, 
   update: function() {
     if(this.ready === true) {
-      this.state.start('Game');
+      this.state.start('MainMenu');
     }
   },
   onLoadComplete: function() {
