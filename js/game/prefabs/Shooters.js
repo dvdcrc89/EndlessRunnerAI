@@ -7,15 +7,15 @@ Shooters = function(game) {
 
     this.upgradeLevel = 0;
     this.upgrade= {
-        shots:[{velX: +900,velY: 0,size: 0.3}],
+        shots:[{velX: +900,velY: 0,size: 0.23}],
         shootRecall:400,
-        isPerforant:false,
     };
     this.shoot= function (x,y){
         
         if(game.time.now > this.fireballTime){
 
         this.upgrade.shots.forEach(shot=>{
+
             let fireball = this.game.add.sprite(x, y, 'fireball');
             fireball.animations.add('shoot', [0, 1, 2, 3]);
             fireball.animations.play('shoot', 18, true);
@@ -26,7 +26,6 @@ Shooters = function(game) {
             fireball.body.allowGravity = false;
             fireball.outOfBoundsKill = true;
             fireball.scale.x *= -1;
-            fireball.isPerforant = this.upgrade.isPerforant;
             fireball.update=function(){
                 if(shot.rotation) fireball.rotation+=shot.rotation;
             }
@@ -54,7 +53,6 @@ Shooters = function(game) {
     
         if(number<=this.upgradeLevel) 
             return;
-        console.log(this.upgrade.shots,this.upgradeLevel);    
         switch(number){
             case 3: this.upgrade.shots = [{velX: +900,velY: 0,size: 0.5}];
                     this.upgradeLevel=3;

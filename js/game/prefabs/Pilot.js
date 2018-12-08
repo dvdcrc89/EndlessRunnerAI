@@ -26,7 +26,6 @@ Pilot = function(game, x, y, key, shooter,timeStart,isArmed,isInteligent, frame)
     this.update = function() {
         let ratio =  Math.pow(2.0, -10 * (this.game.width-this.x)/this.game.width);
         let velocity = (ratio * this.vel*10)-(25*JustRun.Game.difficulty);
-        console.log(velocity);
         this.body.velocity.x = velocity;
         if(isArmed && this.shootRecall<=game.time.now){
             shooter.shootBullet(this);
@@ -80,7 +79,6 @@ Pilot = function(game, x, y, key, shooter,timeStart,isArmed,isInteligent, frame)
          if(!isArmed) this.animations.play("die", false);
          this.body.velocity.x *= 0.3;
          this.life--;
-        console.log(this.life)
         if(this.life<1){
             this.body.velocity.x = 0;
             this.body.velocity.y = 400;
@@ -88,10 +86,6 @@ Pilot = function(game, x, y, key, shooter,timeStart,isArmed,isInteligent, frame)
             this.tint = 0xF42336;
             this.body.collideWorldBounds = false;
             this.dead = true;
-            if(isInteligent){
-            let upgrade = Math.floor(Math.random()*(Math.floor(Math.random()*8)+1));            
-            shooter.getUpgrade(upgrade);
-            }
         } else{
               let normalTint= this.tint;
               this.tint = 0xF42336;

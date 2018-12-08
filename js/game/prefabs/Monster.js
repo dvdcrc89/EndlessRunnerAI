@@ -21,9 +21,8 @@ Monster = function(game, x, y, key,players,shooters,frame) {
                     align: "center"
                 };
 
-        this.showLife = this.life > 1 ? game.add.text(this.x, this.y-50, this.life+' /30', style) :
+        this.showLife = this.life > 1 ? game.add.text(this.x, this.y-50, this.life+'HP', style) :
         game.add.text(this.x, this.y-50, 'DANGER!', style)
-        console.log(this.life);
         if(this.life<1) {
             this.kill();
         }

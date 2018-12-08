@@ -18,7 +18,7 @@ JustRun.Game = {
             lastKill: this.time.now,
             killNumber: 0
         };
-       
+        this.upgradesManager = new Upgrades(game,this.shooters,this.monster);
         this.timer6 = game.time.events.loop(10000, () => this.background.tint = Math.random() * 0xffffff, this)
 
         this.ugradeAudio = game.add.audio('upgradeAudio');
@@ -27,7 +27,12 @@ JustRun.Game = {
     },
     update: function() {
         game.physics.arcade.collide(this.pilots, this.ground);
-        game.physics.arcade.collide(this.shooters.fireballs, this.pilots, this.kill, null, this);
+        game.physics.arcade.overlap(this.shooters.fireballs, this.pilots, this.kill, null, this);
+        game.physics.arcade.overlap(this.upgradesManager.fisicalUpgrades, this.monster, 
+                                    (player,upgrade)=>{
+                                            this.upgradesManager.applyUpgrade(player,upgrade);
+                                            upgrade.destroy()}, null, this);
+
         game.physics.arcade.collide(this.shooters.bullets, this.monster, (player,bullet)=>{
             bullet.destroy();
             player.life--;
@@ -45,8 +50,7 @@ JustRun.Game = {
     },
     kill: function(fireball, player) {
          
-           
-            if(fireball && !fireball.isPerforant) {
+           if(fireball) {
                fireball.kill();
             }
             player.die();
@@ -65,7 +69,7 @@ JustRun.Game = {
                 this.messages.removeAll();
                 if (this.combo.killNumber>1)
                     this.messages.add(game.add.text(player.x-200, player.y, this.combo.killNumber + ' X HIT!', style));
-                
+                this.upgradesManager.generateUpgrade(player);
                 this.pilots.remove(player);
                 this.dead.add(player);
             }

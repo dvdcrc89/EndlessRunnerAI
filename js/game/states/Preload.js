@@ -21,8 +21,8 @@ JustRun.Preload = {
     this.load.spritesheet('bullet', 'assets/images/bullet.png', 110, 70, 1);
     this.load.spritesheet('fireball', 'assets/images/fireball.png', 171, 139, 4);
     this.load.spritesheet('monster', 'assets/images/monster.png', 414, 275, 24);
-    this.load.image('coin', 'assets/images/coin.png');
-    this.load.image('planeUpgrade', 'assets/images/planeUpgrade.png');
+    this.load.image('bomb', 'assets/images/upgrades/bomb.png');
+    this.load.image('hpbonus', 'assets/images/upgrades/hpbonus.png');
     this.load.image('robotUpgrade', 'assets/images/robotUpgrade.png');
     
 
