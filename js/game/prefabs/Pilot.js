@@ -3,7 +3,6 @@ Pilot = function(game, x, y, key, shooter,timeStart,isArmed,isInteligent, frame)
     Phaser.Sprite.call(this, game, x, y, key, frame);
     game.add.existing(this);
     this.forget = [];
-    this.fixedX = x;
     this.anchor.setTo(0.5, 0.5);
     this.scale.setTo(0.20);
     this.scale.x *= -1;
@@ -71,7 +70,7 @@ Pilot = function(game, x, y, key, shooter,timeStart,isArmed,isInteligent, frame)
     this.goToLane = function(lane) {
         let y = this.game.height - (130 + (this.game.height / 5 * lane))
 
-        game.physics.arcade.moveToXY(this, this.fixedX, y, 1400);
+        game.physics.arcade.moveToXY(this, this.x, y, 1400);
 
     }
     

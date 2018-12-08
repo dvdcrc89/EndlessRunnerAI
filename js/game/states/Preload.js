@@ -11,7 +11,6 @@ JustRun.Preload = {
 
     this.load.setPreloadSprite(this.preloadBar);
 
-    this.load.image('ground', 'assets/images/ground.png');
     this.load.image('background', 'assets/images/background.png');
 
 
@@ -29,6 +28,10 @@ JustRun.Preload = {
     this.load.audio('coinAudio','assets/audio/coin.wav')
     this.load.audio('upgradeAudio','assets/audio/upgrade.wav')
     this.load.audio('hitAudio','assets/audio/hit.wav')
+    this.load.audio('hitPlane','assets/audio/hitPlane.wav')
+    this.load.audio('directHit','assets/audio/directHit.wav')
+    this.load.audio('soundtrack','assets/audio/soundtrack.mp3')
+  
 
 
     this.load.onLoadComplete.add(this.onLoadComplete, this);

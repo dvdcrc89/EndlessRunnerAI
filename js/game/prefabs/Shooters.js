@@ -10,7 +10,7 @@ Shooters = function(game) {
         shots:[{velX: +900,velY: 0,size: 0.23}],
         shootRecall:400,
     };
-    this.shoot= function (x,y){
+    this.shoot = function (x,y){
         
         if(game.time.now > this.fireballTime){
 
@@ -47,56 +47,6 @@ Shooters = function(game) {
             this.bullets.add(bullet);
         }
     
-
-    
-    this.getUpgrade=function(number){
-    
-        if(number<=this.upgradeLevel) 
-            return;
-        switch(number){
-            case 3: this.upgrade.shots = [{velX: +900,velY: 0,size: 0.5}];
-                    this.upgradeLevel=3;
-                    this.upgrade.shootRecall=500;
-                    this.upgrade.isPerforant=true;
-                    break;
-            case 4: this.upgrade.shots = [{velX: +900,velY: 0,size: 0.3},{velX: +900,velY: +300,size: 0.3}];
-                    this.upgradeLevel=4;
-                    this.upgrade.shootRecall=550;
-                    break;
-            case 5: this.upgrade.shots = 
-                [{velX: +900,velY: +300,size: 0.3},{velX: +900,velY: -300,size: 0.3}];
-                    this.upgradeLevel=5;
-                    this.upgrade.shootRecall=600;
-                    break;
-            case 6: this.upgrade.shots = 
-                    [{velX: +900,velY: +300,size: 0.3},{velX: +900,velY: -300,size: 0.3},{velX: +900,velY: 0,size: 0.3}];
-                    this.upgradeLevel=6;
-                    this.upgrade.shootRecall=700;
-                    break;
-
-            case 7: this.upgrade.shots = 
-                [{velX: -900,velY: 0,size: 0.3},{velX: -900,velY: +300,size: 0.3},{velX: -900,velY: -300,size: 0.3},
-                 {velX: -900,velY: +450,size: 0.3},{velX: -900,velY: -450,size: 0.3}];
-                    this.upgradeLevel=7;
-                    break;
-            case 8: this.upgrade.shots = 
-                [{velX: -900,velY: 0,size: 0.3},{velX: -900,velY: +300,size: 0.3},{velX: -900,velY: -300,size: 0.3},
-                 {velX: -900,velY: +450,size: 0.3},{velX: -900,velY: -450,size: 0.3},
-                {velX: -900,velY: +150,size: 0.3},{velX: -900,velY: -150,size: 0.3}];
-                    this.upgradeLevel=8;
-                    break;
-            case 9: this.upgrade.shots = 
-                [{velX: +900,velY: 0,size: 0.3,rotation:0.2},
-                 {velX: +900,velY: +300,size: 0.3, rotation:0.2},
-                 {velX: +900,velY: -300,size: 0.3, rotation:0.2},
-                 {velX: +900,velY: +450,size: 0.3, rotation:0.2},
-                 {velX: +900,velY: -450,size: 0.3, rotation:0.2},
-                 {velX: +900,velY: +150,size: 0.3, rotation:0.2},
-                 {velX: +900,velY: -150,size: 0.3,rotation:0.2}];
-                    this.upgradeLevel=9;
-                    break;
-            }
-        }
 }
         
         
