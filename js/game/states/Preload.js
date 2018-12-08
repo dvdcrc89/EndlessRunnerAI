@@ -30,6 +30,8 @@ JustRun.Preload = {
     this.load.audio('hitAudio','assets/audio/hit.wav')
     this.load.audio('hitPlane','assets/audio/hitPlane.wav')
     this.load.audio('directHit','assets/audio/directHit.wav')
+          this.load.audio('combo','assets/audio/combo.mp3')
+
     this.load.audio('soundtrack','assets/audio/soundtrack.mp3')
   
 

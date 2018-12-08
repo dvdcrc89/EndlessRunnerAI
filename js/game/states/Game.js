@@ -25,6 +25,8 @@ JustRun.Game = {
         this.hitAudio = game.add.audio('hitAudio');
         this.hitPlaneAudio = game.add.audio('hitPlane');
         this.direcHitAudio = game.add.audio('directHit');
+                this.planeHitAudio = game.add.audio('combo');
+
         this.soundtrack = game.add.audio('soundtrack');
         this.soundtrack.loop = true;
         this.soundtrack.play();
@@ -63,6 +65,9 @@ JustRun.Game = {
            if(fireball) {
                fireball.kill();
             }
+            this.planeHitAudio.volume=0.6;
+            this.planeHitAudio.play();
+
             player.die();
             if(player.life<1){
             if(this.time.now>this.combo.lastKill) {this.combo.lastKill= this.time.now; this.combo.killNumber= 0}
@@ -77,8 +82,9 @@ JustRun.Game = {
                 };
 
                 this.messages.removeAll();
-                if (this.combo.killNumber>1)
+                if (this.combo.killNumber>1){
                     this.messages.add(game.add.text(player.x-200, player.y, this.combo.killNumber + ' X HIT!', style));
+                }
                 this.upgradesManager.generateUpgrade(player);
                 this.pilots.remove(player);
                 this.dead.add(player);
