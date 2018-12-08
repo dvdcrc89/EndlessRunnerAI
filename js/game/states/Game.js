@@ -45,7 +45,7 @@ JustRun.Game = {
 
         game.physics.arcade.collide(this.shooters.bullets, this.player, (player,bullet)=>{
             bullet.destroy();
-            player.life--;
+            player.life-= 1+this.difficulty;
             this.hitAudio.play();
         }, null, this);
         game.physics.arcade.collide(this.pilots, this.player,(player,pilot)=>{

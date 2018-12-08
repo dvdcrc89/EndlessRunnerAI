@@ -32,10 +32,10 @@ Upgrades = function(game,shooters,player){
         
         {frame: 'hpbonus',type: healthUpgrade,payload:5,level:1},
         {frame: 'hpbonus',type: healthUpgrade,payload:10,level:2},
-        {frame: 'hpbonus',type: healthUpgrade,payload:30,level:3},
-        {frame: 'hpbonus',type: healthUpgrade,payload:40,level:4},
+        {frame: 'hpbonus',type: healthUpgrade,payload:20,level:3},
+        {frame: 'hpbonus',type: healthUpgrade,payload:30,level:4},
         {frame: 'hpbonus',type: healthUpgrade,payload:50,level:5},
-        {frame: 'hpbonus',type: healthUpgrade,payload:100,level:6},
+        {frame: 'hpbonus',type: healthUpgrade,payload:70,level:6},
         ]
     
 
@@ -43,7 +43,7 @@ Upgrades = function(game,shooters,player){
     this.generateUpgrade = function(pilot){
             let chance = Math.floor(Math.random()*20);
             console.log(chance);
-            if (chance>=19 || (player.life===1 && chance>=8)){
+            if (chance>=19 || (player.life<4 && chance>=8)){
                 let validUpgrades = this.upgrades.filter(upgrade=>upgrade.level <= JustRun.Game.difficulty+1);
                 let upgrade = validUpgrades[Math.floor(Math.random()*validUpgrades.length)];
                 let fisicalUpgrade = this.game.add.sprite(pilot.x,pilot.y,upgrade.frame);
