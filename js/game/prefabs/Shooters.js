@@ -10,6 +10,8 @@ Shooters = function(game) {
         shots:[{velX: +900,velY: 0,size: 0.23}],
         shootRecall:400,
     };
+    
+    //Shooting function for Player
     this.shoot = function (x,y){
         
         if(game.time.now > this.fireballTime){
@@ -37,6 +39,7 @@ Shooters = function(game) {
         }
     }
     
+    //Shooting function for enemies (Pilots)
     this.shootBullet = function(player){
         let bullet = this.game.add.sprite(player.x-50, player.y, 'bullet');
             bullet.animations.add('shoot', [0]);
