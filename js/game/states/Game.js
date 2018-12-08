@@ -97,10 +97,10 @@ JustRun.Game = {
         }
 
     },
-    createPilots: function(numberOfpilots, areArmed, areInteligents) {
+    createPilots: function(numberOfPilots, areArmed, areInteligents) {
         this.audios.direcHitAudio.play();
-        for (let i = 0; i < numberOfpilots; i++)
-            this.pilots.add(new Pilot(this.game, this.game.width, game.height / numberOfpilots * i, 'pilot', this.shooters, this.gameStartAt, areArmed, areInteligents, this.player));
+        for (let i = 0; i < numberOfPilots; i++)
+            this.pilots.add(new Pilot(this.game, this.game.width, game.height / numberOfPilots * i, 'pilot', this.shooters, this.gameStartAt, areArmed, areInteligents, this.player));
 
 
     },

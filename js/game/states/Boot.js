@@ -1,6 +1,5 @@
 
 const JustRun = function() {};
-
 JustRun.Boot = {
   preload: function() {
     this.load.image('logo', 'assets/images/logo.png');
@@ -8,8 +7,6 @@ JustRun.Boot = {
   },
   create: function() {
     this.game.stage.backgroundColor = '#fff';
-    
-    //  Unless you specifically know your game needs to support multi-touch I would recommend setting this to 1
     this.input.maxPointers = 1;
 
     if (this.game.device.desktop) {
