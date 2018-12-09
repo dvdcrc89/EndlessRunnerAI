@@ -36,6 +36,8 @@ JustRun.Preload = {
 
     this.load.audio('soundtrack','assets/audio/soundtrack.mp3')
     this.load.audio('menuAudio','assets/audio/random.wav')
+          this.load.audio('gameOver','assets/audio/gameOver.wav')
+
 
   
 
