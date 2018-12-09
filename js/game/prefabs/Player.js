@@ -40,7 +40,7 @@ Player = function(game, x, y, key, players, shooters, frame) {
                 else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) this.body.velocity.x = +500;
                 else this.body.velocity.x = 0
 
-                if (game.input.keyboard.isDown(Phaser.Keyboard.Q) && !this.shot) {
+                if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) && !this.shot) {
                     let whereIam = 10 - Math.floor(this.body.y / ((this.game.height - 200) / 10));
                     if (whereIam < 0) whereIam = 0;
 

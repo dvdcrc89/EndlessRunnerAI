@@ -3,6 +3,8 @@ JustRun.MainMenu = {
     create: function() {
         this.background = game.add.tileSprite(0, 0, game.width, game.height - 1, 'background');
         this.background.autoScroll(-50,-6);
+        this.keys = this.game.add.sprite(0, this.game.height-500, 'keys');
+        this.title = this.game.add.sprite(game.width/3, 20, 'title');
         this.buttons = game.add.group();
         this.buttonsText = game.add.group();
         this.primaryColor = "#C21807";
@@ -16,30 +18,12 @@ JustRun.MainMenu = {
         this.menuAudio.play();
         game.difficulty = 0;
         game.audio=true;
-        if (this.game.device.desktop) {
-            this.title ="SHOOT'EM ALL".split('');
-              this.title.forEach((char,index)=>{
-                let text = game.add.text(200+(index*50), 100, char, {
-                    font: "4rem Open Sans",
-                    fill: ["#C21807", "#0892D0", "#FFF4E6","#000000"]
-                        [Math.floor(Math.random() * 4)],
-                    align: "center"
-                });
-                this.titleArray.add(text);  
 
-            })
-        }
     },
     update: function() {
-        //Applies animation "bounce-out to every character of title
         this.t += 0.016;
         this.ratio = this.t / 2;
         if (this.ratio > 1) this.ratio = 1
-         if (this.game.device.desktop) {
-            this.titleArray.children.forEach((text,index)=>{
-                text.x = this.bounce(this.ratio) * 70 * (index + 1.5)+230;
-            })
-         }
         let marginTop =  this.game.device.desktop ? 100 : 0;
         //Applies animation "bounce-out to every button
         this.buttons.children.forEach((button, index) => {
