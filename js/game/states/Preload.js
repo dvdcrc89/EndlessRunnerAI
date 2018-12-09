@@ -22,7 +22,7 @@ JustRun.Preload = {
     if (this.game.device.desktop && !this.game.device.firefox) 
         this.load.spritesheet('player', 'assets/images/monster.png', 414, 275, 24);
     else  
-        this.load.spritesheet('player', 'assets/images/monsterMobile.png', 414, 275, 3);
+        this.load.spritesheet('player', 'assets/images/monsterMobile.png', 404, 275, 12);
     
     this.load.image('bomb', 'assets/images/upgrades/bomb.png');
     this.load.image('hpbonus', 'assets/images/upgrades/hpbonus.png');
