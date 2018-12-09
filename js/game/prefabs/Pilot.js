@@ -36,6 +36,8 @@ Pilot = function(game, x, y, key, shooter, timeStart, isArmed, isInteligent, pla
             player.life -= 3;
             this.destroy();
         }
+
+        //[AI] Calculate a random number for upsidedown flying 
         if (!this.dead && isInteligent) {
             let random = Math.floor(Math.random() * 1000);
             if (random == 999 && !this.upsidedown) {
@@ -49,6 +51,12 @@ Pilot = function(game, x, y, key, shooter, timeStart, isArmed, isInteligent, pla
                 this.goToLane([0, 5][Math.floor(Math.random() * 2)])
 
             }
+            /* [AI] Iterate every fireball, if a fireball it's going to hit the Pilot, the Pilot moves away.
+                The screen is divided in 10 parts; if Pilot is on the top 3 row goes down. if it is on the bottom 2 it goes up,
+                if it is in the middle 5 it goes half of the time up and half of the time down.
+                Then Pilot "forget" that fireball so it won't be trying again to avoid it.
+                The velocity with which Pilot avoid fireball is randomized to give a more realistic user experience.
+            */
             shooter.fireballs.children.filter((fireball) => fireball.body.x < this.body.x && !this.forget.includes(fireball)).forEach((fireball) => {
                 this.forget.filter(fireball => fireball.x > this.game.width).forEach(fireball => fireball.destroy());
                 let whereIam = 10 - Math.floor(this.body.y / ((this.game.height - 200) / 10));
@@ -75,6 +83,9 @@ Pilot = function(game, x, y, key, shooter, timeStart, isArmed, isInteligent, pla
     }
 
     this.die = function() {
+        /* Removes a life from Pilot, if Pilot has 0 life it die
+           Otherwise it flash red and change sprite to a broken airplane
+        */
         if (!isArmed) this.animations.play("die", false);
         this.body.velocity.x *= 0.3;
         this.life--;
@@ -93,6 +104,8 @@ Pilot = function(game, x, y, key, shooter, timeStart, isArmed, isInteligent, pla
 
     }
 
+
+    //    This function has been taken from https://github.com/AlmasB/
     this.bounce = function(ratio) {
         if (ratio < 1 / 2.75) {
             return 7.5625 * ratio * ratio

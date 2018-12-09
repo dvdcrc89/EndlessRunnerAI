@@ -111,7 +111,9 @@ Upgrades = function(game, shooters, player) {
     ]
 
 
-
+    /*Generate a random upgrade 5% of the time 
+      unless player has less then 4 life then it generate an upgrade 65% of the time
+    */
     this.generateUpgrade = function(pilot) {
         let chance = Math.floor(Math.random() * 20);
         if (chance >= 19 || (player.life < 4 && chance >= 8)) {
@@ -128,7 +130,6 @@ Upgrades = function(game, shooters, player) {
 
     }
 
-
     this.applyUpgrade = function(player, fisicalUpgrade) {
         let upgrade = fisicalUpgrade.effect;
         switch (upgrade.type) {
@@ -141,7 +142,6 @@ Upgrades = function(game, shooters, player) {
             case shieldUpgrade:
                 player.hasShield = true;
                 break;
-
             default:
                 break;
         }

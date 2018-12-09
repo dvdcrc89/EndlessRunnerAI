@@ -2,9 +2,9 @@ JustRun.MainMenu = function() {}
 JustRun.MainMenu = {
     create: function() {
         this.background = game.add.tileSprite(0, 0, game.width, game.height - 1, 'background');
-        this.background.autoScroll(-50,-6);
-        this.keys = this.game.add.sprite(0, this.game.height-500, 'keys');
-        this.title = this.game.add.sprite(game.width/3, 20, 'title');
+        this.background.autoScroll(-50, -6);
+        this.keys = this.game.add.sprite(0, this.game.height - 500, 'keys');
+        this.title = this.game.add.sprite(game.width / 3, 20, 'title');
         this.buttons = game.add.group();
         this.buttonsText = game.add.group();
         this.primaryColor = "#C21807";
@@ -17,7 +17,7 @@ JustRun.MainMenu = {
         this.menuAudio.loop = true;
         this.menuAudio.play();
         game.difficulty = 0;
-        game.audio=true;
+        game.audio = true;
 
     },
     update: function() {
@@ -91,10 +91,10 @@ JustRun.MainMenu = {
 
         })
     },
-    audioMenu: function(){
+    audioMenu: function() {
         let audioColor = game.audio === true ? this.activeColor : this.primaryColor;
         let noAudioColor = game.audio === true ? this.primaryColor : this.activeColor;
-            this.generateButton(this.game.width / 2, 250, 350, 150, 'button', 'Loud', audioColor, () => {
+        this.generateButton(this.game.width / 2, 250, 350, 150, 'button', 'Loud', audioColor, () => {
             game.audio = true;
             this.menuAudio.stop();
             this.menuAudio.play();
@@ -112,7 +112,7 @@ JustRun.MainMenu = {
             this.settingMenu();
 
         })
-        
+
     },
     clearOldMenu: function() {
         console.log(game.difficulty)

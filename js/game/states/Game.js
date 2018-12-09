@@ -2,10 +2,10 @@ JustRun.Game = function() {}
 JustRun.Game = {
 
     create: function() {
-       
+
         game.scoreStats = {
-           score : 0,
-           higherCombo : 0 
+            score: 0,
+            higherCombo: 0
         }
         game.physics.startSystem(Phaser.Physics.ARCADE);
         this.gameStartAt = game.time.now;
@@ -37,49 +37,33 @@ JustRun.Game = {
         this.audios.soundtrack.loop = true;
         this.audios.soundtrack.play();
         //Disable sounds if User had select MUTE
-        if(!game.audio)
-            Object.entries(this.audios).forEach(audio =>audio[1].volume=0)
+        if (!game.audio)
+            Object.entries(this.audios).forEach(audio => audio[1].volume = 0)
         else
-            Object.entries(this.audios).forEach(audio =>audio[1].volume=1)
+            Object.entries(this.audios).forEach(audio => audio[1].volume = 1)
 
 
     },
     update: function() {
-        if (this.scoreText) this.scoreText.destroy();
-        if (this.higherComboText) this.higherComboText.destroy();
 
-        let style = {
-            font: "2rem Orbitron",
-            fill: "#fff4e6",
-            align: "center"
-        };
-        this.scoreText = game.add.text(10, 10, 'Score: ' + game.scoreStats.score, style);
-        style = {
-            font: "1rem Orbitron",
-            fill: "#C21807",
-            align: "center"
-        };
-        this.higherComboText = game.add.text(10, 45, 'Biggest Combo: ' + game.scoreStats.higherCombo + "X", style);
-
-
+        this.writeScoreText();
         this.manageCollisionAndOverlap();
         this.stageLoop();
-        
-        if(this.player.isDead){
+        //Check if the game is ended
+        if (this.player.isDead) {
             this.audios.soundtrack.stop();
             this.audios.direcHitAudio.stop();
             game.state.start('GameOver');
 
         }
-        
         this.cleanGroups();
-        
+
     },
     hitPilot: function(fireball, pilot) {
 
         if (fireball) fireball.kill();
 
-        if(game.audio) this.audios.planeHitAudio.volume = 0.6;
+        if (game.audio) this.audios.planeHitAudio.volume = 0.6;
         this.audios.planeHitAudio.play();
 
         pilot.die();
@@ -107,9 +91,9 @@ JustRun.Game = {
                 if (game.scoreStats.higherCombo < this.combo.killNumber) game.scoreStats.higherCombo = this.combo.killNumber;
             }
             game.scoreStats.score += 10;
-            
+
             this.upgradesManager.generateUpgrade(pilot);
-            
+
             this.pilots.remove(pilot);
             this.dead.add(pilot);
         }
@@ -173,24 +157,39 @@ JustRun.Game = {
 
         }, null, this);
     },
-    cleanGroups(){
+    cleanGroups() {
         //Remove sprite from groups when not needed anymore for performance 
-        if(this.dead.children.length>30) this.dead.removeAll();
-          
-        this.shooters.fireballs.children.forEach(fireball=>{
-            if(fireball.x>game.width || !fireball.alive){
-              this.shooters.fireballs.remove(fireball);
-            } 
+        if (this.dead.children.length > 30) this.dead.removeAll();
+
+        this.shooters.fireballs.children.forEach(fireball => {
+            if (fireball.x > game.width || !fireball.alive) {
+                this.shooters.fireballs.remove(fireball);
+            }
         });
-         
-        this.shooters.bullets.children.forEach(bullet=>{
-            if(bullet.x<30 || !bullet.alive){
-              this.shooters.bullets.remove(bullet);
-            
-            } 
+
+        this.shooters.bullets.children.forEach(bullet => {
+            if (bullet.x < 30 || !bullet.alive) {
+                this.shooters.bullets.remove(bullet);
+
+            }
         });
+    },
+    writeScoreText: function() {
+        if (this.scoreText) this.scoreText.destroy();
+        if (this.higherComboText) this.higherComboText.destroy();
+
+        let style = {
+            font: "2rem Orbitron",
+            fill: "#fff4e6",
+            align: "center"
+        };
+        this.scoreText = game.add.text(10, 10, 'Score: ' + game.scoreStats.score, style);
+        style = {
+            font: "1rem Orbitron",
+            fill: "#C21807",
+            align: "center"
+        };
+        this.higherComboText = game.add.text(10, 45, 'Biggest Combo: ' + game.scoreStats.higherCombo + "X", style);
     }
-
-
 
 };
