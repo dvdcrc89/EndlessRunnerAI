@@ -21,8 +21,10 @@ JustRun.Preload = {
     // Load a lighter version of Player sprite if on mobile and on firefox
     if (this.game.device.desktop && !this.game.device.firefox) 
         this.load.spritesheet('player', 'assets/images/monster.png', 414, 275, 24);
-    else  
-        this.load.spritesheet('player', 'assets/images/monsterMobile.png', 404, 275, 12);
+    else if (this.game.device.desktop && this.game.device.firefox) 
+         this.load.spritesheet('player', 'assets/images/monsterFirefox.png', 404, 275, 12);
+    else    
+        this.load.spritesheet('player', 'assets/images/monsterMobile.png', 404, 275, 4);
     
     this.load.image('bomb', 'assets/images/upgrades/bomb.png');
     this.load.image('hpbonus', 'assets/images/upgrades/hpbonus.png');
