@@ -10,7 +10,7 @@ Player = function(game, x, y, key, players, shooters, frame) {
     this.animations.play('fly', 18, true);
     this.game.physics.arcade.enableBody(this);
     this.body.collideWorldBounds = true;
-
+    this.isDead= false;
     this.update = function() {
         
         //Health Points text
@@ -24,43 +24,40 @@ Player = function(game, x, y, key, players, shooters, frame) {
         this.showLife = this.life > 1 ? game.add.text(this.x, this.y - 50, this.life + 'HP', style) :
             game.add.text(this.x, this.y - 50, 'DANGER!', style)
         if (this.life < 1) {
-            this.kill();
+            this.isDead=true;
+            if(this.showLife) this.showLife.destroy();
+            this.kill();  
         }
         
-        
-        if (this.game.device.desktop) {
-            //  Desktop Input
-            if (game.input.keyboard.isDown(Phaser.Keyboard.UP)) this.body.velocity.y = -500;
-            else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) this.body.velocity.y = +500;
-            else this.body.velocity.y = 0
+        if(!this.isDead){
+            if (this.game.device.desktop) {
+                //  Desktop Input
+                if (game.input.keyboard.isDown(Phaser.Keyboard.UP)) this.body.velocity.y = -500;
+                else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) this.body.velocity.y = +500;
+                else this.body.velocity.y = 0
 
-            if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) this.body.velocity.x = -500;
-            else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) this.body.velocity.x = +500;
-            else this.body.velocity.x = 0
+                if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) this.body.velocity.x = -500;
+                else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) this.body.velocity.x = +500;
+                else this.body.velocity.x = 0
 
-            if (game.input.keyboard.isDown(Phaser.Keyboard.Q) && !this.shot) {
-                let whereIam = 10 - Math.floor(this.body.y / ((this.game.height - 200) / 10));
-                if (whereIam < 0) whereIam = 0;
+                if (game.input.keyboard.isDown(Phaser.Keyboard.Q) && !this.shot) {
+                    let whereIam = 10 - Math.floor(this.body.y / ((this.game.height - 200) / 10));
+                    if (whereIam < 0) whereIam = 0;
 
-                shooters.shoot(this.body.x + 100, this.body.y + 50, -900, 0, 0.3);
+                    shooters.shoot(this.body.x + 100, this.body.y + 50, -900, 0, 0.3);
 
+                }
+            } else {
+                // Mobile Input
+                game.input.onDown.add(()=>{
+                game.physics.arcade.moveToPointer(this, 300);
+               shooters.shoot(this.body.x + 100, this.body.y + 50, -900, 0, 0.3);
+
+
+             })
             }
-        } else {
-            // Mobile Input
-            game.input.onDown.add(()=>{
-            game.physics.arcade.moveToPointer(this, 300);
-           shooters.shoot(this.body.x + 100, this.body.y + 50, -900, 0, 0.3);
-
-
-         })
         }
-
         
-        
-       
-    
-
-
 
     };
 }
