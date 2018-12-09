@@ -10,12 +10,11 @@ Shooters = function(game) {
         shots:[{velX: +900,velY: 0,size: 0.23}],
         shootRecall:400,
     };
-    
+  
     //Shooting function for Player
     this.shoot = function (x,y){
-        
-        if(game.time.now > this.fireballTime){
 
+        if(game.time.now > this.fireballTime){
         this.upgrade.shots.forEach(shot=>{
 
             let fireball = this.game.add.sprite(x, y, 'fireball');
@@ -28,14 +27,13 @@ Shooters = function(game) {
             fireball.body.allowGravity = false;
             fireball.outOfBoundsKill = true;
             fireball.scale.x *= -1;
-            fireball.update=function(){
-                if(shot.rotation) fireball.rotation+=shot.rotation;
-            }
             game.physics.enable(fireball,Phaser.Physics.ARCADE)
             this.fireballs.add(fireball);
  
         })
-         this.fireballTime=game.time.now+this.upgrade.shootRecall;                                                                         
+         this.fireballTime=game.time.now+this.upgrade.shootRecall;
+
+      
         }
     }
     
@@ -48,6 +46,7 @@ Shooters = function(game) {
             game.physics.arcade.enableBody(bullet);
             bullet.body.velocity.x = -500;
             this.bullets.add(bullet);
+
         }
     
 }

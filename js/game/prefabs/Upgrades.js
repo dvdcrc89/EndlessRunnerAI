@@ -114,7 +114,6 @@ Upgrades = function(game, shooters, player) {
 
     this.generateUpgrade = function(pilot) {
         let chance = Math.floor(Math.random() * 20);
-        console.log(chance);
         if (chance >= 19 || (player.life < 4 && chance >= 8)) {
             let validUpgrades = this.upgrades.filter(upgrade => upgrade.level <= JustRun.Game.difficulty + 1);
             let upgrade = validUpgrades[Math.floor(Math.random() * validUpgrades.length)];
@@ -132,11 +131,9 @@ Upgrades = function(game, shooters, player) {
 
     this.applyUpgrade = function(player, fisicalUpgrade) {
         let upgrade = fisicalUpgrade.effect;
-        console.log(upgrade);
         switch (upgrade.type) {
             case healthUpgrade:
                 player.life += upgrade.payload;
-                console.log("health");
                 break;
             case weaponUpgrade:
                 this.shooters.upgrade = upgrade.payload;

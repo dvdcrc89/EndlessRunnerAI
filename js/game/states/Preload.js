@@ -12,12 +12,10 @@ JustRun.Preload = {
     this.load.setPreloadSprite(this.preloadBar);
 
     this.load.image('background', 'assets/images/background.png');
-
-          this.load.image('menubg', 'assets/images/menubg.png');
-
     this.load.spritesheet('pilot', 'assets/images/planefly.png', 449.5, 302,7);
     this.load.spritesheet('bullet', 'assets/images/bullet.png', 110, 70, 1);
     this.load.spritesheet('fireball', 'assets/images/fireball.png', 171, 139, 4);
+    
     // Load a lighter version of Player sprite if on mobile and on firefox
     if (this.game.device.desktop && !this.game.device.firefox) 
         this.load.spritesheet('player', 'assets/images/monster.png', 414, 275, 24);
@@ -28,22 +26,17 @@ JustRun.Preload = {
     
     this.load.image('bomb', 'assets/images/upgrades/bomb.png');
     this.load.image('hpbonus', 'assets/images/upgrades/hpbonus.png');
-    this.load.image('robotUpgrade', 'assets/images/robotUpgrade.png');
     this.load.image('button', 'assets/images/button.png');
+      
     this.load.audio('upgradeAudio','assets/audio/upgrade.wav')
     this.load.audio('hitAudio','assets/audio/hit.wav')
     this.load.audio('hitPlane','assets/audio/hitPlane.wav')
     this.load.audio('directHit','assets/audio/directHit.wav')
     this.load.audio('combo','assets/audio/combo.mp3')
-
     this.load.audio('soundtrack','assets/audio/soundtrack.mp3')
     this.load.audio('menuAudio','assets/audio/random.wav')
-          this.load.audio('gameOver','assets/audio/gameOver.wav')
-
-
-  
-
-
+    this.load.audio('gameOver','assets/audio/gameOver.wav')
+      
     this.load.onLoadComplete.add(this.onLoadComplete, this);
   },
   create: function() {

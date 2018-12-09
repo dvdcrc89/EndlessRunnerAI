@@ -36,7 +36,7 @@ JustRun.Game = {
 
         this.audios.soundtrack.loop = true;
         this.audios.soundtrack.play();
-        //Disable sounds if User had selected mute
+        //Disable sounds if User had select MUTE
         if(!game.audio)
             Object.entries(this.audios).forEach(audio =>audio[1].volume=0)
         else
@@ -68,10 +68,12 @@ JustRun.Game = {
         if(this.player.isDead){
             this.audios.soundtrack.stop();
             this.audios.direcHitAudio.stop();
-            console.log(this.audios);
             game.state.start('GameOver');
 
         }
+        
+        this.cleanGroups();
+        
     },
     hitPilot: function(fireball, pilot) {
 
@@ -83,6 +85,7 @@ JustRun.Game = {
         pilot.die();
 
         if (pilot.life < 1) {
+            //Manage combos, counter reset after 1 second from the last kill
             if (this.time.now > this.combo.lastKill) {
                 this.combo.lastKill = this.time.now;
                 this.combo.killNumber = 0
@@ -104,7 +107,9 @@ JustRun.Game = {
                 if (game.scoreStats.higherCombo < this.combo.killNumber) game.scoreStats.higherCombo = this.combo.killNumber;
             }
             game.scoreStats.score += 10;
+            
             this.upgradesManager.generateUpgrade(pilot);
+            
             this.pilots.remove(pilot);
             this.dead.add(pilot);
         }
@@ -168,6 +173,23 @@ JustRun.Game = {
 
         }, null, this);
     },
+    cleanGroups(){
+        //Remove sprite from groups when not needed anymore for performance 
+        if(this.dead.children.length>30) this.dead.removeAll();
+          
+        this.shooters.fireballs.children.forEach(fireball=>{
+            if(fireball.x>game.width || !fireball.alive){
+              this.shooters.fireballs.remove(fireball);
+            } 
+        });
+         
+        this.shooters.bullets.children.forEach(bullet=>{
+            if(bullet.x<30 || !bullet.alive){
+              this.shooters.bullets.remove(bullet);
+            
+            } 
+        });
+    }
 
 
 

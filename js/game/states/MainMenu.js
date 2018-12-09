@@ -31,6 +31,7 @@ JustRun.MainMenu = {
         }
     },
     update: function() {
+        //Applies animation "bounce-out to every character of title
         this.t += 0.016;
         this.ratio = this.t / 2;
         if (this.ratio > 1) this.ratio = 1
@@ -40,7 +41,7 @@ JustRun.MainMenu = {
             })
          }
         let marginTop =  this.game.device.desktop ? 100 : 0;
-
+        //Applies animation "bounce-out to every button
         this.buttons.children.forEach((button, index) => {
             button.y = this.bounce(this.ratio) * 100 * (index + 1.5) + marginTop;
             button.textButton.y = button.y;
