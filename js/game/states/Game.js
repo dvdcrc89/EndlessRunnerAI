@@ -2,8 +2,11 @@ JustRun.Game = function() {}
 JustRun.Game = {
 
     create: function() {
-        this.score = 0;
-        this.higherCombo = 0;
+       
+        game.scoreStats = {
+           score : 0,
+           higherCombo : 0 
+        }
         game.physics.startSystem(Phaser.Physics.ARCADE);
         this.gameStartAt = game.time.now;
         this.background = game.add.tileSprite(0, 0, game.width, game.height - 1, 'background');
@@ -33,6 +36,11 @@ JustRun.Game = {
 
         this.audios.soundtrack.loop = true;
         this.audios.soundtrack.play();
+        //Disable sounds if User had selected mute
+        if(!game.audio)
+            Object.entries(this.audios).forEach(audio =>audio[1].volume=0)
+        else
+            Object.entries(this.audios).forEach(audio =>audio[1].volume=1)
 
 
     },
@@ -45,23 +53,31 @@ JustRun.Game = {
             fill: "#fff4e6",
             align: "center"
         };
-        this.scoreText = game.add.text(10, 10, 'Score: ' + this.score, style);
+        this.scoreText = game.add.text(10, 10, 'Score: ' + game.scoreStats.score, style);
         style = {
             font: "1rem Orbitron",
             fill: "#C21807",
             align: "center"
         };
-        this.higherComboText = game.add.text(10, 45, 'Biggest Combo: ' + this.higherCombo + "X", style);
+        this.higherComboText = game.add.text(10, 45, 'Biggest Combo: ' + game.scoreStats.higherCombo + "X", style);
 
 
         this.manageCollisionAndOverlap();
         this.stageLoop();
+        
+        if(this.player.isDead){
+            this.audios.soundtrack.stop();
+            this.audios.direcHitAudio.stop();
+            console.log(this.audios);
+            game.state.start('GameOver');
+
+        }
     },
     hitPilot: function(fireball, pilot) {
 
         if (fireball) fireball.kill();
 
-        this.audios.planeHitAudio.volume = 0.6;
+        if(game.audio) this.audios.planeHitAudio.volume = 0.6;
         this.audios.planeHitAudio.play();
 
         pilot.die();
@@ -84,10 +100,10 @@ JustRun.Game = {
             this.messages.removeAll();
             if (this.combo.killNumber > 1) {
                 this.messages.add(game.add.text(pilot.x - 200, pilot.y, this.combo.killNumber + ' X HIT!', style));
-                this.score += this.combo.killNumber;
-                if (this.higherCombo < this.combo.killNumber) this.higherCombo = this.combo.killNumber;
+                game.scoreStats.score += this.combo.killNumber;
+                if (game.scoreStats.higherCombo < this.combo.killNumber) game.scoreStats.higherCombo = this.combo.killNumber;
             }
-            this.score += 10;
+            game.scoreStats.score += 10;
             this.upgradesManager.generateUpgrade(pilot);
             this.pilots.remove(pilot);
             this.dead.add(pilot);

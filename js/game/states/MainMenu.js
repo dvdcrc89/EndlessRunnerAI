@@ -2,13 +2,13 @@ JustRun.MainMenu = function() {}
 JustRun.MainMenu = {
     create: function() {
         this.background = game.add.tileSprite(0, 0, game.width, game.height - 1, 'background');
+        this.background.autoScroll(-50,-6);
         this.buttons = game.add.group();
         this.buttonsText = game.add.group();
         this.primaryColor = "#C21807";
         this.activeColor = "#0892D0"
         let x = 0;
         this.t = 0;
-        this.background.tint = Math.random() * 0xffffff;
         this.initialMenu();
         this.titleArray = game.add.group();
         this.menuAudio = game.add.audio('menuAudio');
@@ -63,18 +63,13 @@ JustRun.MainMenu = {
     },
     initialMenu: function() {
         this.generateButton(this.game.width / 2, 150, 350, 150, 'button', 'Start', this.primaryColor, () => {
-            if (this.randomAudio) this.randomAudio.stop();
+            if (this.menuAudio) this.menuAudio.stop();
             game.scale.startFullScreen(false);
             this.state.start('Game');
         }, this)
-        this.generateButton(this.game.width / 2, 250, 350, 150, 'button', 'Leaderboard', this.primaryColor, () => console.log("1"))
         this.generateButton(this.game.width / 2, 350, 350, 150, 'button', 'Setting', this.primaryColor, () => {
             this.clearOldMenu();
             this.settingMenu();
-        })
-        this.generateButton(this.game.width / 2, 450, 350, 150, 'button', 'Help', this.primaryColor, () => {
-                    
-                
         })
     },
     settingMenu: function() {
@@ -140,7 +135,6 @@ JustRun.MainMenu = {
         this.buttons.removeAll();
         this.buttonsText.removeAll();
         this.t = 0;
-        this.background.tint = Math.random() * 0xffffff;
 
     },
     bounce: function(ratio) {
