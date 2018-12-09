@@ -20,7 +20,7 @@ JustRun.MainMenu = {
             this.title ="SHOOT'EM ALL".split('');
               this.title.forEach((char,index)=>{
                 let text = game.add.text(200+(index*50), 100, char, {
-                    font: "4rem Orbitron",
+                    font: "4rem Open Sans",
                     fill: ["#C21807", "#0892D0", "#FFF4E6","#000000"]
                         [Math.floor(Math.random() * 4)],
                     align: "center"
@@ -52,7 +52,7 @@ JustRun.MainMenu = {
         button.width = width;
         button.height = height;
         let style = {
-            font: "2rem Orbitron",
+            font: "2rem Open Sans",
             fill: color,
             align: "center"
         };
