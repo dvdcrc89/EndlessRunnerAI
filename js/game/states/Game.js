@@ -57,16 +57,16 @@ JustRun.Game = {
         this.manageCollisionAndOverlap();
         this.stageLoop();
     },
-    hitPilot: function(fireball, player) {
+    hitPilot: function(fireball, pilot) {
 
         if (fireball) fireball.kill();
 
         this.audios.planeHitAudio.volume = 0.6;
         this.audios.planeHitAudio.play();
 
-        player.die();
+        pilot.die();
 
-        if (player.life < 1) {
+        if (pilot.life < 1) {
             if (this.time.now > this.combo.lastKill) {
                 this.combo.lastKill = this.time.now;
                 this.combo.killNumber = 0
@@ -83,14 +83,14 @@ JustRun.Game = {
 
             this.messages.removeAll();
             if (this.combo.killNumber > 1) {
-                this.messages.add(game.add.text(player.x - 200, player.y, this.combo.killNumber + ' X HIT!', style));
+                this.messages.add(game.add.text(pilot.x - 200, pilot.y, this.combo.killNumber + ' X HIT!', style));
                 this.score += this.combo.killNumber;
                 if (this.higherCombo < this.combo.killNumber) this.higherCombo = this.combo.killNumber;
             }
             this.score += 10;
-            this.upgradesManager.generateUpgrade(player);
-            this.pilots.remove(player);
-            this.dead.add(player);
+            this.upgradesManager.generateUpgrade(pilot);
+            this.pilots.remove(pilot);
+            this.dead.add(pilot);
         }
     },
     stageLoop: function() {
