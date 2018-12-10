@@ -6,6 +6,14 @@ Upgrades = function(game, shooters, player) {
     const weaponUpgrade = "Increase player fire-power";
     const shieldUpgrade = "Enable shield"
     this.fisicalUpgrades = game.add.group();
+    /* Upgrades : Upgrade[]
+       Upgrade: {
+              frame: The key of the sprite to generate,
+              type:  The type of the upgrade, it can be an Health , Weapon or Shield upgrade,
+              level: The minimum game stage you can find this upgrade on. Es. Lvl 2 upgrades can be found from stage 2 on,
+              payload: The values needed in order to apply the upgrade. That will be the shots for Weapon, the life points for                 Health 
+       }    
+    */
     this.upgrades = [{
             frame: 'bomb',
             type: weaponUpgrade,
@@ -119,7 +127,7 @@ Upgrades = function(game, shooters, player) {
 
 
     }
-
+   
     this.applyUpgrade = function(player, fisicalUpgrade) {
         let upgrade = fisicalUpgrade.effect;
         switch (upgrade.type) {
@@ -129,6 +137,7 @@ Upgrades = function(game, shooters, player) {
             case weaponUpgrade:
                 this.shooters.upgrade = upgrade.payload;
                 break;
+            // There are none shield upgrades implemented at the moment    
             case shieldUpgrade:
                 player.hasShield = true;
                 break;
