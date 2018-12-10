@@ -10,7 +10,7 @@ Upgrades = function(game, shooters, player) {
        Upgrade: {
               frame: The key of the sprite to generate,
               type:  The type of the upgrade, it can be an Health , Weapon or Shield upgrade,
-              level: The minimum game stage you can find this upgrade on. Es. Lvl 2 upgrades can be found from stage 2 on,
+              level: The minimum game stage you can find this upgrade on. Es. Lvl 3 upgrades can be found from stage 3 on,
               payload: The values needed in order to apply the upgrade. That will be the shots for Weapon, the life points for                 Health 
        }    
     */
@@ -51,7 +51,7 @@ Upgrades = function(game, shooters, player) {
         {
             frame: 'bomb',
             type: weaponUpgrade,
-            level: 0,
+            level: 3,
             payload: {
                 shots: [{
                     velX: +1100,
