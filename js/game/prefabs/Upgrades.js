@@ -43,32 +43,22 @@ Upgrades = function(game, shooters, player) {
         {
             frame: 'bomb',
             type: weaponUpgrade,
-            level: 3,
+            level: 0,
             payload: {
                 shots: [{
-                        velX: +1100,
-                        velY: 0,
-                        size: 0.24
-                    }, {
-                        velX: +1100,
-                        velY: +300,
-                        size: 0.24
-                    }, {
-                        velX: +1100,
-                        velY: -300,
-                        size: 0.24
-                    },
-                    {
-                        velX: +1100,
-                        velY: +100,
-                        size: 0.24
-                    }, {
-                        velX: +1100,
-                        velY: -100,
-                        size: 0.24
-                    }
-                ],
-                shootRecall: 300,
+                    velX: +1100,
+                    velY: 0,
+                    size: 0.24
+                }, {
+                    velX: +1100,
+                    velY: +200,
+                    size: 0.24
+                }, {
+                    velX: +1100,
+                    velY: -200,
+                    size: 0.24
+                }],
+                shootRecall: 350,
             }
         },
 
