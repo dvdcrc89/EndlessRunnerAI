@@ -1,2 +1,2 @@
 Play at
-https://dvdcrc89.github.io/EndlessRunnerAI/
+https://dvdcrc89.github.io/ShootemAll/
