@@ -18,6 +18,7 @@ Shooters = function(game) {
     this.shoot = function(x, y) {
 
         if (game.time.now > this.fireballTime) {
+            // it fires a fireball for every shot in shots
             this.upgrade.shots.forEach(shot => {
 
                 let fireball = this.game.add.sprite(x, y, 'fireball');
@@ -39,8 +40,8 @@ Shooters = function(game) {
     }
 
     //Shooting function for enemies (Pilots)
-    this.shootBullet = function(player) {
-        let bullet = this.game.add.sprite(player.x - 50, player.y, 'bullet');
+    this.shootBullet = function(pilot) {
+        let bullet = this.game.add.sprite(pilot.x - 50, pilot.y, 'bullet');
         bullet.animations.add('shoot', [0]);
         bullet.animations.play('shoot', 18, true);
         bullet.scale.setTo(0.30);
