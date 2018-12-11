@@ -11,16 +11,16 @@ Player = function(game, x, y, key, players, shooters, frame) {
     this.game.physics.arcade.enableBody(this);
     this.body.collideWorldBounds = true;
     this.isDead = false;
-    this.update = function() {
-
-        //Health Points text
-        if (this.showLife) this.showLife.destroy();
-        let style = {
+    const style = {
             font: "1.3rem Orbitron",
             fill: ["#ED2939"],
             align: "center"
         };
+    this.update = function() {
 
+        //Health Points text
+        if (this.showLife) this.showLife.destroy();
+       
         this.showLife = this.life > 1 ? game.add.text(this.x, this.y - 50, this.life + 'HP', style) :
             game.add.text(this.x, this.y - 50, 'DANGER!', style)
         if (this.life < 1) {
