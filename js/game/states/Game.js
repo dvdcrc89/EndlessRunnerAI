@@ -16,7 +16,7 @@ JustRun.Game = {
         this.messages = game.add.group()
         this.dead = game.add.group();
         this.difficulty = game.difficulty;
-        game.physics.enable(this.dead, Phaser.Physics.ARCADE)
+        // game.physics.enable(this.dead, Phaser.Physics.ARCADE)
         this.player = new Player(this.game, 200, game.height, 'player', this.pilots, this.shooters)
         this.combo = {
             lastKill: this.time.now,
@@ -24,6 +24,7 @@ JustRun.Game = {
         };
         this.upgradesManager = new Upgrades(game, this.shooters, this.player);
         this.timer6 = game.time.events.loop(10000, () => this.background.tint = Math.random() * 0xffffff, this)
+        this.writeScoreText();
 
         this.audios = {
             upgradeAudio: game.add.audio('upgradeAudio'),
@@ -46,7 +47,6 @@ JustRun.Game = {
     },
     update: function() {
 
-        this.writeScoreText();
         this.manageCollisionAndOverlap();
         this.stageLoop();
         //Check if the game is ended
@@ -60,7 +60,7 @@ JustRun.Game = {
 
     },
     hitPilot: function(fireball, pilot) {
-
+        
         if (fireball) fireball.kill();
 
         if (game.audio) this.audios.planeHitAudio.volume = 0.6;
@@ -97,6 +97,8 @@ JustRun.Game = {
             this.pilots.remove(pilot);
             this.dead.add(pilot);
         }
+            this.writeScoreText();
+
     },
     stageLoop: function() {
 

@@ -31,7 +31,7 @@ Shooters = function(game) {
                 fireball.body.allowGravity = false;
                 fireball.outOfBoundsKill = true;
                 fireball.scale.x *= -1;
-                game.physics.enable(fireball, Phaser.Physics.ARCADE)
+                // game.physics.enable(fireball, Phaser.Physics.ARCADE)
                 this.fireballs.add(fireball);
 
             })
